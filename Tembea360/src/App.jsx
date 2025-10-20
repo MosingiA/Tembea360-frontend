@@ -3,16 +3,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import Navbar from './components/Navbar';
-import Homepage from './pages/Homepage';
-import Login from './pages/auth/Login';
-import Signup from './pages/auth/Signup';
-import Dashboard from './pages/Dashboard';
-import Browse from './pages/Browse';
-import Contact from './pages/Contact';
-import Profile from './pages/Profile';
-import Checkout from './pages/Checkout';
-import ProfessionalSetup from './pages/ProfessionalSetup';
-import Services from './pages/Services';
+import Homepage from './Components/Homepage';
+import Login from './Components/auth/Login';
+import Signup from './Components/auth/Signup';
+import Logout from './Components/auth/Logout';
+import Contact from './Components/Contact';
+import Profile from './Components/Profile';
+import About from  './Components/About';
+import ProfessionalSetup from './Components/ProfessionalSetup';
+import Booking from './Components/Booking';
+import Explore from './Components/Explore';
+import Footer from './Components/Footer';
+import Payment from './Components/Payment';
+import Tourdetails from './Components/Tourdetails';
+import Tours from './Components/Tours';
 import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
 
@@ -26,11 +30,11 @@ function AppContent() {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/browse" element={<Browse />} />
+        <Route path="/explore" element={<Explore />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/checkout" element={
+        <Route path="/logout" element={
           <ProtectedRoute>
-            <Checkout />
+            <Logout />
           </ProtectedRoute>
         } />
         <Route path="/professional-setup" element={
@@ -38,9 +42,9 @@ function AppContent() {
             <ProfessionalSetup />
           </ProtectedRoute>
         } />
-        <Route path="/dashboard" element={
+        <Route path="/booking" element={
           <ProtectedRoute>
-            <Dashboard />
+            <Booking />
           </ProtectedRoute>
         } />
         <Route path="/profile" element={
@@ -48,11 +52,23 @@ function AppContent() {
             <Profile />
           </ProtectedRoute>
         } />
-        <Route path="/services" element={
+        <Route path="/tourdetails" element={
           <ProtectedRoute>
-            <Services />
+            <Tourdetails />
           </ProtectedRoute>
         } />
+        <Route path="/tours" element={
+          <ProtectedRoute>
+            <Tours />
+          </ProtectedRoute>
+        } />
+        <Route path="/about" element={<About />} />
+        <Route path="/payment" element={
+          <ProtectedRoute>
+            <Payment />
+          </ProtectedRoute>
+        } />
+        <Route path="*" element={<h1 className="text-center mt-20 text-3xl">404 - Page Not Found</h1>} /> 
       </Routes>
     </div>
   );
