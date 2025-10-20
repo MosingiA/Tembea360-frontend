@@ -1,226 +1,115 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const Profile = () => {
+function Profile() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
 
+  const bookings = [
+    { title: 'Maasai Mara Safari', location: 'Maasai Mara', date: 'Mar 15-20', status: 'Confirmed', price: '$1,200' },
+    { title: 'Mount Kenya Hiking', location: 'Mount Kenya', date: 'Apr 5-8', status: 'Pending', price: '$800' },
+    { title: 'Diani Beach Trip', location: 'Diani Beach', date: 'May 12-16', status: 'Confirmed', price: '$600' }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section with Background */}
-      <div className="relative h-64 bg-gradient-to-r from-green-600 to-green-700">
-        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
-          <div className="flex items-center space-x-6">
-            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-2xl font-bold text-green-600">
-                {user?.name?.charAt(0) || 'U'}
-              </span>
-            </div>
-            <div className="text-white">
-              <h1 className="text-3xl font-bold">{user?.name || 'User Name'}</h1>
-              <p className="text-green-100 text-lg">{user?.email || 'user@example.com'}</p>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white text-green-700 mt-2">
-                ✓ Verified Traveler
-              </span>
-            </div>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+      {/* Header */}
+      <div style={{ background: 'linear-gradient(135deg, #059669, #047857)', height: '200px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.2)' }}></div>
+        <div style={{ position: 'relative', textAlign: 'center', color: 'white' }}>
+          <div style={{ width: '80px', height: '80px', backgroundColor: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px', fontSize: '1.8rem', fontWeight: 'bold', color: '#059669' }}>
+            {user?.name?.charAt(0) || 'U'}
           </div>
+          <h1 style={{ fontSize: '2rem', fontWeight: 'bold', margin: '0 0 8px 0' }}>{user?.name || 'User Name'}</h1>
+          <p style={{ fontSize: '1.1rem', opacity: 0.9, margin: '0 0 10px 0' }}>{user?.email || 'user@example.com'}</p>
+          <span style={{ backgroundColor: 'rgba(255,255,255,0.2)', padding: '6px 12px', borderRadius: '15px', fontSize: '0.85rem' }}>✓ Verified</span>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-        {/* Navigation Tabs */}
-        <div className="bg-white rounded-lg shadow-lg">
-          <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8 px-6">
-              {['Profile', 'My Bookings', 'Settings'].map((tab, index) => {
-                const tabKey = ['profile', 'bookings', 'settings'][index];
-                return (
-                  <button
-                    key={tabKey}
-                    onClick={() => setActiveTab(tabKey)}
-                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                      activeTab === tabKey
-                        ? 'border-green-600 text-green-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                );
-              })}
-            </nav>
+      {/* Main Content */}
+      <div style={{ maxWidth: '900px', margin: '-40px auto 0', padding: '0 20px' }}>
+        <div style={{ backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
+          
+          {/* Tabs */}
+          <div style={{ display: 'flex', borderBottom: '1px solid #e9ecef', backgroundColor: '#f8f9fa' }}>
+            {['profile', 'bookings', 'settings'].map(tab => (
+              <button key={tab} onClick={() => setActiveTab(tab)} style={{ flex: 1, padding: '15px 20px', border: 'none', backgroundColor: activeTab === tab ? 'white' : 'transparent', color: activeTab === tab ? '#059669' : '#6c757d', fontWeight: activeTab === tab ? '600' : '500', cursor: 'pointer', borderBottom: activeTab === tab ? '2px solid #059669' : 'none' }}>
+                {tab === 'profile' ? 'Profile' : tab === 'bookings' ? 'My Bookings' : 'Settings'}
+              </button>
+            ))}
           </div>
 
-          {/* Tab Content */}
-          <div className="p-8">
+          {/* Content */}
+          <div style={{ padding: '30px' }}>
             {activeTab === 'profile' && (
-              <div className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Personal Information</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                      <input
-                        type="text"
-                        defaultValue={user?.name || ''}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                      />
+              <div>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '25px', color: '#212529' }}>Personal Information</h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '25px' }}>
+                  {[
+                    { label: 'Full Name', type: 'text', value: user?.name },
+                    { label: 'Email', type: 'email', value: user?.email },
+                    { label: 'Phone', type: 'tel', placeholder: '+254 700 000 000' },
+                    { label: 'Location', type: 'text', placeholder: 'Nairobi, Kenya' }
+                  ].map((field, i) => (
+                    <div key={i}>
+                      <label style={{ display: 'block', fontWeight: '500', marginBottom: '6px', color: '#495057' }}>{field.label}</label>
+                      <input type={field.type} defaultValue={field.value || ''} placeholder={field.placeholder} style={{ width: '100%', padding: '10px 12px', border: '1px solid #ced4da', borderRadius: '6px', fontSize: '0.95rem' }} />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                      <input
-                        type="email"
-                        defaultValue={user?.email || ''}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                      <input
-                        type="tel"
-                        placeholder="+254 700 000 000"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                      <input
-                        type="text"
-                        placeholder="Nairobi, Kenya"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Bio</label>
-                      <textarea
-                        rows={4}
-                        placeholder="Tell us about yourself and your travel interests..."
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                      />
-                    </div>
-                  </div>
+                  ))}
                 </div>
-                
-                <div className="flex space-x-4">
-                  <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200">
-                    Update Profile
-                  </button>
-                  <button className="border border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-3 rounded-lg font-medium transition-colors duration-200">
-                    Cancel
-                  </button>
+                <div style={{ marginBottom: '25px' }}>
+                  <label style={{ display: 'block', fontWeight: '500', marginBottom: '6px', color: '#495057' }}>About Me</label>
+                  <textarea rows={3} placeholder="Tell us about yourself..." style={{ width: '100%', padding: '10px 12px', border: '1px solid #ced4da', borderRadius: '6px', fontSize: '0.95rem', resize: 'vertical' }} />
                 </div>
+                <button style={{ backgroundColor: '#059669', color: 'white', padding: '10px 25px', borderRadius: '6px', border: 'none', fontWeight: '500', cursor: 'pointer' }}>Save Changes</button>
               </div>
             )}
 
             {activeTab === 'bookings' && (
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-bold text-gray-900">My Bookings</h2>
-                  <div className="flex space-x-2">
-                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">3 Active</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm font-medium">12 Completed</span>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  {[
-                    { title: 'Maasai Mara Safari Adventure', location: 'Maasai Mara National Reserve', date: 'March 15-20, 2024', status: 'Confirmed', price: '$1,200' },
-                    { title: 'Mount Kenya Hiking Expedition', location: 'Mount Kenya National Park', date: 'April 5-8, 2024', status: 'Pending', price: '$800' },
-                    { title: 'Diani Beach Getaway', location: 'Diani Beach, Mombasa', date: 'May 12-16, 2024', status: 'Confirmed', price: '$600' }
-                  ].map((booking, index) => (
-                    <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <h4 className="text-lg font-semibold text-gray-900">{booking.title}</h4>
-                          <p className="text-gray-600 mt-1">{booking.location}</p>
-                          <p className="text-sm text-gray-500 mt-2">{booking.date}</p>
-                        </div>
-                        <div className="text-right">
-                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                            booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                          }`}>
-                            {booking.status}
-                          </span>
-                          <p className="text-lg font-bold text-gray-900 mt-2">{booking.price}</p>
+              <div>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '25px', color: '#212529' }}>My Bookings</h2>
+                {bookings.map((booking, i) => (
+                  <div key={i} style={{ border: '1px solid #dee2e6', borderRadius: '8px', padding: '20px', marginBottom: '15px', backgroundColor: '#f8f9fa' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <div>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '8px', color: '#212529' }}>{booking.title}</h3>
+                        <p style={{ color: '#6c757d', fontSize: '0.9rem', margin: '0 0 4px 0' }}>📍 {booking.location}</p>
+                        <p style={{ color: '#6c757d', fontSize: '0.9rem', margin: '0 0 12px 0' }}>📅 {booking.date}</p>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button style={{ padding: '6px 12px', backgroundColor: 'white', border: '1px solid #ced4da', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}>Details</button>
+                          <button style={{ padding: '6px 12px', backgroundColor: '#059669', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}>Contact</button>
                         </div>
                       </div>
-                      <div className="mt-4 flex space-x-3">
-                        <button className="text-green-600 hover:text-green-700 font-medium text-sm">
-                          View Details
-                        </button>
-                        <button className="text-gray-600 hover:text-gray-700 font-medium text-sm">
-                          Download Receipt
-                        </button>
+                      <div style={{ textAlign: 'right' }}>
+                        <span style={{ display: 'inline-block', padding: '4px 8px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '500', backgroundColor: booking.status === 'Confirmed' ? '#d4edda' : '#fff3cd', color: booking.status === 'Confirmed' ? '#155724' : '#856404', marginBottom: '8px' }}>{booking.status}</span>
+                        <p style={{ fontSize: '1.2rem', fontWeight: '700', color: '#059669', margin: 0 }}>{booking.price}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             )}
 
             {activeTab === 'settings' && (
-              <div className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Account Settings</h2>
-                  
-                  <div className="space-y-6">
-                    <div className="bg-gray-50 p-6 rounded-lg">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Notifications</h3>
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="font-medium text-gray-700">Email Notifications</span>
-                            <p className="text-sm text-gray-500">Receive booking confirmations and updates</p>
-                          </div>
-                          <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-green-600">
-                            <span className="inline-block h-4 w-4 transform rounded-full bg-white transition translate-x-6" />
-                          </button>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="font-medium text-gray-700">SMS Notifications</span>
-                            <p className="text-sm text-gray-500">Get text updates for urgent matters</p>
-                          </div>
-                          <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200">
-                            <span className="inline-block h-4 w-4 transform rounded-full bg-white transition translate-x-1" />
-                          </button>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="font-medium text-gray-700">Marketing Emails</span>
-                            <p className="text-sm text-gray-500">Receive travel deals and promotions</p>
-                          </div>
-                          <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-green-600">
-                            <span className="inline-block h-4 w-4 transform rounded-full bg-white transition translate-x-6" />
-                          </button>
-                        </div>
+              <div>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '25px', color: '#212529' }}>Settings</h2>
+                <div style={{ marginBottom: '30px' }}>
+                  {[
+                    { title: 'Email Notifications', desc: 'Get booking updates via email' },
+                    { title: 'SMS Alerts', desc: 'Receive text message updates' },
+                    { title: 'Marketing Emails', desc: 'Get travel deals and offers' }
+                  ].map((setting, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: i < 2 ? '1px solid #e9ecef' : 'none' }}>
+                      <div>
+                        <h4 style={{ margin: '0 0 4px 0', fontWeight: '500', color: '#212529' }}>{setting.title}</h4>
+                        <p style={{ margin: 0, fontSize: '0.85rem', color: '#6c757d' }}>{setting.desc}</p>
                       </div>
+                      <input type="checkbox" defaultChecked style={{ transform: 'scale(1.1)' }} />
                     </div>
-                    
-                    <div className="bg-gray-50 p-6 rounded-lg">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Privacy & Security</h3>
-                      <div className="space-y-3">
-                        <button className="text-green-600 hover:text-green-700 font-medium text-sm block">
-                          Change Password
-                        </button>
-                        <button className="text-green-600 hover:text-green-700 font-medium text-sm block">
-                          Two-Factor Authentication
-                        </button>
-                        <button className="text-green-600 hover:text-green-700 font-medium text-sm block">
-                          Download My Data
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-                
-                <div className="pt-6 border-t border-gray-200">
-                  <h3 className="text-lg font-semibold text-red-600 mb-4">Danger Zone</h3>
-                  <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium text-sm transition-colors duration-200">
-                    Delete Account
-                  </button>
-                  <p className="text-sm text-gray-500 mt-2">This action cannot be undone.</p>
+                <div style={{ paddingTop: '20px', borderTop: '1px solid #e9ecef' }}>
+                  <button style={{ backgroundColor: '#dc3545', color: 'white', padding: '8px 16px', borderRadius: '6px', border: 'none', fontSize: '0.9rem', fontWeight: '500', cursor: 'pointer' }}>Delete Account</button>
                 </div>
               </div>
             )}
@@ -229,6 +118,6 @@ const Profile = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Profile;
