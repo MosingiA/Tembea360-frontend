@@ -12,39 +12,41 @@ function Profile() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #059669, #047857)', height: '200px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.2)' }}></div>
-        <div style={{ position: 'relative', textAlign: 'center', color: 'white' }}>
-          <div style={{ width: '80px', height: '80px', backgroundColor: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px', fontSize: '1.8rem', fontWeight: 'bold', color: '#059669' }}>
+      <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 h-48 relative flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative text-center text-white">
+          <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-emerald-600">
             {user?.name?.charAt(0) || 'U'}
           </div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 'bold', margin: '0 0 8px 0' }}>{user?.name || 'User Name'}</h1>
-          <p style={{ fontSize: '1.1rem', opacity: 0.9, margin: '0 0 10px 0' }}>{user?.email || 'user@example.com'}</p>
-          <span style={{ backgroundColor: 'rgba(255,255,255,0.2)', padding: '6px 12px', borderRadius: '15px', fontSize: '0.85rem' }}>✓ Verified</span>
+          <h1 className="text-4xl font-bold mb-2">{user?.name || 'User Name'}</h1>
+          <p className="text-lg opacity-90 mb-3">{user?.email || 'user@example.com'}</p>
+          <span className="bg-white/20 px-3 py-2 rounded-2xl text-sm">Verified</span>
         </div>
       </div>
 
       {/* Main Content */}
-      <div style={{ maxWidth: '900px', margin: '-40px auto 0', padding: '0 20px' }}>
-        <div style={{ backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
+      <div className="max-w-4xl mx-auto -mt-10 px-5">
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
           
           {/* Tabs */}
-          <div style={{ display: 'flex', borderBottom: '1px solid #e9ecef', backgroundColor: '#f8f9fa' }}>
+          <div className="flex border-b border-gray-200 bg-gray-50">
             {['profile', 'bookings', 'settings'].map(tab => (
-              <button key={tab} onClick={() => setActiveTab(tab)} style={{ flex: 1, padding: '15px 20px', border: 'none', backgroundColor: activeTab === tab ? 'white' : 'transparent', color: activeTab === tab ? '#059669' : '#6c757d', fontWeight: activeTab === tab ? '600' : '500', cursor: 'pointer', borderBottom: activeTab === tab ? '2px solid #059669' : 'none' }}>
+              <button key={tab} onClick={() => setActiveTab(tab)} className={`flex-1 py-4 px-5 border-none cursor-pointer font-medium ${
+                activeTab === tab ? 'bg-white text-emerald-600 font-semibold border-b-2 border-emerald-600' : 'bg-transparent text-gray-600'
+              }`}>
                 {tab === 'profile' ? 'Profile' : tab === 'bookings' ? 'My Bookings' : 'Settings'}
               </button>
             ))}
           </div>
 
           {/* Content */}
-          <div style={{ padding: '30px' }}>
+          <div className="p-8">
             {activeTab === 'profile' && (
               <div>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '25px', color: '#212529' }}>Personal Information</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '25px' }}>
+                <h2 className="text-2xl font-semibold mb-6 text-gray-900">Personal Information</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
                   {[
                     { label: 'Full Name', type: 'text', value: user?.name },
                     { label: 'Email', type: 'email', value: user?.email },
@@ -52,37 +54,41 @@ function Profile() {
                     { label: 'Location', type: 'text', placeholder: 'Nairobi, Kenya' }
                   ].map((field, i) => (
                     <div key={i}>
-                      <label style={{ display: 'block', fontWeight: '500', marginBottom: '6px', color: '#495057' }}>{field.label}</label>
-                      <input type={field.type} defaultValue={field.value || ''} placeholder={field.placeholder} style={{ width: '100%', padding: '10px 12px', border: '1px solid #ced4da', borderRadius: '6px', fontSize: '0.95rem' }} />
+                      <label className="block font-medium mb-2 text-gray-700">{field.label}</label>
+                      <input type={field.type} defaultValue={field.value || ''} placeholder={field.placeholder} className="w-full p-3 border border-gray-300 rounded-lg text-base" />
                     </div>
                   ))}
                 </div>
-                <div style={{ marginBottom: '25px' }}>
-                  <label style={{ display: 'block', fontWeight: '500', marginBottom: '6px', color: '#495057' }}>About Me</label>
-                  <textarea rows={3} placeholder="Tell us about yourself..." style={{ width: '100%', padding: '10px 12px', border: '1px solid #ced4da', borderRadius: '6px', fontSize: '0.95rem', resize: 'vertical' }} />
+                <div className="mb-6">
+                  <label className="block font-medium mb-2 text-gray-700">About Me</label>
+                  <textarea rows={3} placeholder="Tell us about yourself..." className="w-full p-3 border border-gray-300 rounded-lg text-base resize-y" />
                 </div>
-                <button style={{ backgroundColor: '#059669', color: 'white', padding: '10px 25px', borderRadius: '6px', border: 'none', fontWeight: '500', cursor: 'pointer' }}>Save Changes</button>
+                <button className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium cursor-pointer hover:bg-emerald-700">Save Changes</button>
               </div>
             )}
 
             {activeTab === 'bookings' && (
               <div>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '25px', color: '#212529' }}>My Bookings</h2>
+                <h2 className="text-2xl font-semibold mb-6 text-gray-900">My Bookings</h2>
                 {bookings.map((booking, i) => (
-                  <div key={i} style={{ border: '1px solid #dee2e6', borderRadius: '8px', padding: '20px', marginBottom: '15px', backgroundColor: '#f8f9fa' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div key={i} className="border border-gray-300 rounded-lg p-5 mb-4 bg-gray-50">
+                    <div className="flex justify-between items-start">
                       <div>
-                        <h3 style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '8px', color: '#212529' }}>{booking.title}</h3>
-                        <p style={{ color: '#6c757d', fontSize: '0.9rem', margin: '0 0 4px 0' }}>📍 {booking.location}</p>
-                        <p style={{ color: '#6c757d', fontSize: '0.9rem', margin: '0 0 12px 0' }}>📅 {booking.date}</p>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button style={{ padding: '6px 12px', backgroundColor: 'white', border: '1px solid #ced4da', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}>Details</button>
-                          <button style={{ padding: '6px 12px', backgroundColor: '#059669', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}>Contact</button>
+                        <h3 className="text-lg font-semibold mb-2 text-gray-900">{booking.title}</h3>
+                        <p className="text-gray-600 text-sm mb-1">{booking.location}</p>
+                        <p className="text-gray-600 text-sm mb-3">{booking.date}</p>
+                        <div className="flex gap-2">
+                          <button className="px-3 py-2 border border-gray-300 rounded bg-white cursor-pointer text-sm">Details</button>
+                          <button className="px-3 py-2 bg-emerald-600 text-white border-none rounded cursor-pointer text-sm">Contact</button>
                         </div>
                       </div>
-                      <div style={{ textAlign: 'right' }}>
-                        <span style={{ display: 'inline-block', padding: '4px 8px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '500', backgroundColor: booking.status === 'Confirmed' ? '#d4edda' : '#fff3cd', color: booking.status === 'Confirmed' ? '#155724' : '#856404', marginBottom: '8px' }}>{booking.status}</span>
-                        <p style={{ fontSize: '1.2rem', fontWeight: '700', color: '#059669', margin: 0 }}>{booking.price}</p>
+                      <div className="text-right">
+                        <span className={`inline-block px-2 py-1 rounded-xl text-xs font-medium mb-2 ${
+                          booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {booking.status}
+                        </span>
+                        <p className="text-xl font-bold text-emerald-600">{booking.price}</p>
                       </div>
                     </div>
                   </div>
@@ -92,24 +98,24 @@ function Profile() {
 
             {activeTab === 'settings' && (
               <div>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '25px', color: '#212529' }}>Settings</h2>
-                <div style={{ marginBottom: '30px' }}>
+                <h2 className="text-2xl font-semibold mb-6 text-gray-900">Settings</h2>
+                <div className="mb-8">
                   {[
                     { title: 'Email Notifications', desc: 'Get booking updates via email' },
                     { title: 'SMS Alerts', desc: 'Receive text message updates' },
                     { title: 'Marketing Emails', desc: 'Get travel deals and offers' }
                   ].map((setting, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: i < 2 ? '1px solid #e9ecef' : 'none' }}>
+                    <div key={i} className={`flex justify-between items-center py-3 ${i < 2 ? 'border-b border-gray-200' : ''}`}>
                       <div>
-                        <h4 style={{ margin: '0 0 4px 0', fontWeight: '500', color: '#212529' }}>{setting.title}</h4>
-                        <p style={{ margin: 0, fontSize: '0.85rem', color: '#6c757d' }}>{setting.desc}</p>
+                        <h4 className="font-medium text-gray-900 mb-1">{setting.title}</h4>
+                        <p className="text-sm text-gray-600">{setting.desc}</p>
                       </div>
-                      <input type="checkbox" defaultChecked style={{ transform: 'scale(1.1)' }} />
+                      <input type="checkbox" defaultChecked className="scale-110" />
                     </div>
                   ))}
                 </div>
-                <div style={{ paddingTop: '20px', borderTop: '1px solid #e9ecef' }}>
-                  <button style={{ backgroundColor: '#dc3545', color: 'white', padding: '8px 16px', borderRadius: '6px', border: 'none', fontSize: '0.9rem', fontWeight: '500', cursor: 'pointer' }}>Delete Account</button>
+                <div className="pt-5 border-t border-gray-200">
+                  <button className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-pointer hover:bg-red-700">Delete Account</button>
                 </div>
               </div>
             )}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TourCard from './TourCard';
+import './Tours.css';
 
 function Tours() {
   const navigate = useNavigate();
@@ -33,78 +35,55 @@ function Tours() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+    <div className="tours-container">
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #059669, #047857)', padding: '60px 20px', textAlign: 'center', color: 'white' }}>
-        <h1 style={{ fontSize: '3rem', fontWeight: 'bold', margin: '0 0 15px 0' }}>Discover Amazing Tours</h1>
-        <p style={{ fontSize: '1.2rem', opacity: 0.9, maxWidth: '600px', margin: '0 auto' }}>Explore Kenya's breathtaking landscapes and wildlife with our expertly guided tours</p>
+      <div className="tours-header">
+        <h1 className="tours-title">Discover Amazing Tours</h1>
+        <p className="tours-subtitle">Explore Kenya's breathtaking landscapes and wildlife with our expertly guided tours</p>
       </div>
 
       {/* Filters */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
-        <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '30px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', alignItems: 'end' }}>
+      <div className="max-w-6xl mx-auto py-10 px-5">
+        <div className="bg-white rounded-xl p-6 mb-8 shadow-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-end">
             <div>
-              <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', color: '#495057' }}>Search Tours</label>
-              <input type="text" placeholder="Search by name or location..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ width: '100%', padding: '12px 16px', border: '2px solid #e9ecef', borderRadius: '8px', fontSize: '1rem' }} />
+              <label className="block font-medium mb-2 text-gray-700">Search Tours</label>
+              <input type="text" placeholder="Search by name or location..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full p-3 border-2 border-gray-200 rounded-lg text-base" />
             </div>
             <div>
-              <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', color: '#495057' }}>Category</label>
-              <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} style={{ width: '100%', padding: '12px 16px', border: '2px solid #e9ecef', borderRadius: '8px', fontSize: '1rem', backgroundColor: 'white' }}>
+              <label className="block font-medium mb-2 text-gray-700">Category</label>
+              <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full p-3 border-2 border-gray-200 rounded-lg text-base bg-white">
                 {categories.map(cat => <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>)}
               </select>
             </div>
             <div>
-              <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', color: '#495057' }}>Price Range</label>
-              <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)} style={{ width: '100%', padding: '12px 16px', border: '2px solid #e9ecef', borderRadius: '8px', fontSize: '1rem', backgroundColor: 'white' }}>
+              <label className="block font-medium mb-2 text-gray-700">Price Range</label>
+              <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)} className="w-full p-3 border-2 border-gray-200 rounded-lg text-base bg-white">
                 {priceRanges.map(range => <option key={range.value} value={range.value}>{range.label}</option>)}
               </select>
             </div>
-            <button onClick={() => { setSearchTerm(''); setSelectedCategory('all'); setPriceRange('all'); }} style={{ padding: '12px 20px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '500' }}>Clear Filters</button>
+            <button onClick={() => { setSearchTerm(''); setSelectedCategory('all'); setPriceRange('all'); }} className="px-5 py-3 bg-gray-500 text-white rounded-lg font-medium hover:bg-gray-600">Clear Filters</button>
           </div>
         </div>
 
         {/* Results */}
-        <div style={{ marginBottom: '20px' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#212529', margin: 0 }}>
+        <div className="mb-5">
+          <h2 className="text-2xl font-semibold text-gray-900">
             {filteredTours.length} {filteredTours.length === 1 ? 'Tour' : 'Tours'} Found
           </h2>
         </div>
 
         {/* Tours Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '25px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTours.map(tour => (
-            <div key={tour.id} onClick={() => handleTourClick(tour.id)} style={{ backgroundColor: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 15px rgba(0,0,0,0.1)', cursor: 'pointer', transition: 'transform 0.2s', ':hover': { transform: 'translateY(-5px)' } }}>
-              <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
-                <img src={tour.image} alt={tour.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', top: '15px', right: '15px', backgroundColor: 'rgba(0,0,0,0.7)', color: 'white', padding: '6px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: '500' }}>
-                  {tour.category.charAt(0).toUpperCase() + tour.category.slice(1)}
-                </div>
-                <div style={{ position: 'absolute', bottom: '15px', left: '15px', backgroundColor: 'rgba(0,0,0,0.7)', color: 'white', padding: '6px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: '500' }}>
-                  {tour.duration}
-                </div>
-              </div>
-              <div style={{ padding: '20px' }}>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: '600', margin: '0 0 8px 0', color: '#212529' }}>{tour.title}</h3>
-                <p style={{ color: '#6c757d', fontSize: '0.9rem', margin: '0 0 8px 0' }}>{tour.location}</p>
-                <p style={{ color: '#495057', fontSize: '0.9rem', lineHeight: '1.4', margin: '0 0 15px 0' }}>{tour.description}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ color: '#ffc107', fontSize: '0.9rem' }}>{tour.rating}</span>
-                    <span style={{ color: '#6c757d', fontSize: '0.85rem' }}>({tour.reviews} reviews)</span>
-                  </div>
-                  <span style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#059669' }}>${tour.price}</span>
-                </div>
-                <button style={{ width: '100%', backgroundColor: '#059669', color: 'white', padding: '12px', borderRadius: '8px', border: 'none', fontSize: '1rem', fontWeight: '500', cursor: 'pointer' }}>View Details</button>
-              </div>
-            </div>
+            <TourCard key={tour.id} tour={tour} onClick={handleTourClick} />
           ))}
         </div>
 
         {filteredTours.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-            <h3 style={{ fontSize: '1.5rem', color: '#6c757d', margin: '0 0 10px 0' }}>No tours found</h3>
-            <p style={{ color: '#6c757d', margin: 0 }}>Try adjusting your search criteria or browse all tours</p>
+          <div className="text-center py-16 px-5">
+            <h3 className="text-2xl text-gray-500 mb-3">No tours found</h3>
+            <p className="text-gray-500">Try adjusting your search criteria or browse all tours</p>
           </div>
         )}
       </div>

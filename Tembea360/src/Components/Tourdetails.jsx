@@ -28,92 +28,92 @@ function TourDetails() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
-      <div style={{ position: 'relative', height: '400px', overflow: 'hidden' }}>
-        <img src={tour.images[currentImage]} alt={tour.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6))' }}></div>
-        <div style={{ position: 'absolute', bottom: '30px', left: '30px', color: 'white' }}>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: '0 0 10px 0' }}>{tour.title}</h1>
-          <p style={{ fontSize: '1.1rem', margin: '0 0 10px 0', opacity: 0.9 }}>{tour.location}</p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+    <div className="min-h-screen bg-gray-50">
+      <div className="relative h-96 overflow-hidden">
+        <img src={tour.images[currentImage]} alt={tour.title} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60"></div>
+        <div className="absolute bottom-8 left-8 text-white">
+          <h1 className="text-4xl font-bold mb-3">{tour.title}</h1>
+          <p className="text-lg mb-3 opacity-90">{tour.location}</p>
+          <div className="flex items-center gap-4">
             <span>{tour.rating} ({tour.reviews} reviews)</span>
             <span>{tour.duration}</span>
           </div>
         </div>
-        <div style={{ position: 'absolute', bottom: '20px', right: '30px', display: 'flex', gap: '8px' }}>
+        <div className="absolute bottom-5 right-8 flex gap-2">
           {tour.images.map((_, i) => (
-            <button key={i} onClick={() => setCurrentImage(i)} style={{ width: '12px', height: '12px', borderRadius: '50%', border: 'none', backgroundColor: currentImage === i ? 'white' : 'rgba(255,255,255,0.5)', cursor: 'pointer' }} />
+            <button key={i} onClick={() => setCurrentImage(i)} className={`w-3 h-3 rounded-full border-none cursor-pointer ${currentImage === i ? 'bg-white' : 'bg-white/50'}`} />
           ))}
         </div>
       </div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px', display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '40px' }}>
-        <div>
-          <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '30px', marginBottom: '25px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: '600', marginBottom: '20px', color: '#212529' }}>About This Tour</h2>
-            <p style={{ fontSize: '1rem', lineHeight: '1.6', color: '#495057', marginBottom: '25px' }}>{tour.description}</p>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: '600', marginBottom: '15px', color: '#212529' }}>Tour Highlights</h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 25px 0' }}>
+      <div className="max-w-6xl mx-auto py-10 px-5 grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-xl p-8 mb-6 shadow-lg">
+            <h2 className="text-3xl font-semibold mb-5 text-gray-900">About This Tour</h2>
+            <p className="text-base leading-relaxed text-gray-700 mb-6">{tour.description}</p>
+            <h3 className="text-xl font-semibold mb-4 text-gray-900">Tour Highlights</h3>
+            <ul className="list-none p-0 mb-6">
               {tour.highlights.map((highlight, i) => (
-                <li key={i} style={{ padding: '8px 0', color: '#495057', fontSize: '0.95rem' }}>{highlight}</li>
+                <li key={i} className="py-2 text-gray-700 text-sm">{highlight}</li>
               ))}
             </ul>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: '600', marginBottom: '15px', color: '#212529' }}>What's Included</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            <h3 className="text-xl font-semibold mb-4 text-gray-900">What's Included</h3>
+            <div className="flex flex-wrap gap-3">
               {tour.includes.map((item, i) => (
-                <span key={i} style={{ backgroundColor: '#e7f3ff', color: '#0066cc', padding: '6px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: '500' }}>{item}</span>
+                <span key={i} className="bg-blue-50 text-blue-600 px-3 py-2 rounded-full text-sm font-medium">{item}</span>
               ))}
             </div>
           </div>
 
-          <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: '600', marginBottom: '15px', color: '#212529' }}>Your Guide</h3>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <div style={{ width: '60px', height: '60px', backgroundColor: '#059669', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', fontWeight: 'bold' }}>{tour.guide.name.charAt(0)}</div>
+          <div className="bg-white rounded-xl p-6 shadow-lg">
+            <h3 className="text-xl font-semibold mb-4 text-gray-900">Your Guide</h3>
+            <div className="flex items-center gap-4">
+              <div className="w-15 h-15 bg-emerald-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">{tour.guide.name.charAt(0)}</div>
               <div>
-                <h4 style={{ margin: '0 0 5px 0', fontSize: '1.1rem', fontWeight: '600', color: '#212529' }}>{tour.guide.name}</h4>
-                <p style={{ margin: '0 0 3px 0', fontSize: '0.9rem', color: '#6c757d' }}>{tour.guide.experience} experience</p>
-                <p style={{ margin: '0 0 3px 0', fontSize: '0.9rem', color: '#6c757d' }}>Speaks: {tour.guide.languages}</p>
-                <span style={{ fontSize: '0.9rem', color: '#059669' }}>{tour.guide.rating} rating</span>
+                <h4 className="mb-1 text-lg font-semibold text-gray-900">{tour.guide.name}</h4>
+                <p className="mb-1 text-sm text-gray-600">{tour.guide.experience} experience</p>
+                <p className="mb-1 text-sm text-gray-600">Speaks: {tour.guide.languages}</p>
+                <span className="text-sm text-emerald-600">{tour.guide.rating} rating</span>
               </div>
             </div>
           </div>
         </div>
 
         <div>
-          <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)', position: 'sticky', top: '20px' }}>
-            <div style={{ textAlign: 'center', marginBottom: '25px' }}>
-              <span style={{ fontSize: '2.2rem', fontWeight: 'bold', color: '#059669' }}>${tour.price}</span>
-              <span style={{ fontSize: '1rem', color: '#6c757d', marginLeft: '5px' }}>per person</span>
+          <div className="bg-white rounded-xl p-6 shadow-xl sticky top-5">
+            <div className="text-center mb-6">
+              <span className="text-4xl font-bold text-emerald-600">${tour.price}</span>
+              <span className="text-base text-gray-600 ml-1">per person</span>
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', color: '#495057' }}>Select Date</label>
-              <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} min={new Date().toISOString().split('T')[0]} style={{ width: '100%', padding: '12px', border: '2px solid #e9ecef', borderRadius: '8px', fontSize: '1rem' }} />
+            <div className="mb-5">
+              <label className="block font-medium mb-2 text-gray-700">Select Date</label>
+              <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} min={new Date().toISOString().split('T')[0]} className="w-full p-3 border-2 border-gray-200 rounded-lg text-base" />
             </div>
 
-            <div style={{ marginBottom: '25px' }}>
-              <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', color: '#495057' }}>Number of Guests</label>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <button onClick={() => setGuests(Math.max(1, guests - 1))} style={{ width: '40px', height: '40px', border: '2px solid #e9ecef', borderRadius: '8px', backgroundColor: 'white', cursor: 'pointer', fontSize: '1.2rem' }}>-</button>
-                <span style={{ fontSize: '1.2rem', fontWeight: '600', minWidth: '30px', textAlign: 'center' }}>{guests}</span>
-                <button onClick={() => setGuests(guests + 1)} style={{ width: '40px', height: '40px', border: '2px solid #e9ecef', borderRadius: '8px', backgroundColor: 'white', cursor: 'pointer', fontSize: '1.2rem' }}>+</button>
+            <div className="mb-6">
+              <label className="block font-medium mb-2 text-gray-700">Number of Guests</label>
+              <div className="flex items-center gap-4">
+                <button onClick={() => setGuests(Math.max(1, guests - 1))} className="w-10 h-10 border-2 border-gray-200 rounded-lg bg-white cursor-pointer text-xl">-</button>
+                <span className="text-xl font-semibold min-w-8 text-center">{guests}</span>
+                <button onClick={() => setGuests(guests + 1)} className="w-10 h-10 border-2 border-gray-200 rounded-lg bg-white cursor-pointer text-xl">+</button>
               </div>
             </div>
 
-            <div style={{ borderTop: '1px solid #e9ecef', paddingTop: '20px', marginBottom: '20px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <span style={{ color: '#6c757d' }}>${tour.price} x {guests} guests</span>
-                <span style={{ fontWeight: '600' }}>${tour.price * guests}</span>
+            <div className="border-t border-gray-200 pt-5 mb-5">
+              <div className="flex justify-between mb-3">
+                <span className="text-gray-600">${tour.price} x {guests} guests</span>
+                <span className="font-semibold">${tour.price * guests}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: '600' }}>
+              <div className="flex justify-between text-lg font-semibold">
                 <span>Total</span>
-                <span style={{ color: '#059669' }}>${tour.price * guests}</span>
+                <span className="text-emerald-600">${tour.price * guests}</span>
               </div>
             </div>
 
-            <button onClick={handleBooking} style={{ width: '100%', backgroundColor: '#059669', color: 'white', padding: '15px', borderRadius: '8px', border: 'none', fontSize: '1.1rem', fontWeight: '600', cursor: 'pointer', marginBottom: '15px' }}>Book Now</button>
-            <p style={{ fontSize: '0.85rem', color: '#6c757d', textAlign: 'center', margin: 0 }}>Free cancellation up to 24 hours before the tour</p>
+            <button onClick={handleBooking} className="w-full bg-emerald-600 text-white py-4 rounded-lg text-lg font-semibold cursor-pointer mb-4 hover:bg-emerald-700">Book Now</button>
+            <p className="text-sm text-gray-600 text-center">Free cancellation up to 24 hours before the tour</p>
           </div>
         </div>
       </div>
