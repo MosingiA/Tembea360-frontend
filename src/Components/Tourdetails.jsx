@@ -216,7 +216,7 @@ const Tourdetails = () => {
               <div className="space-y-6">
                 {tour.itinerary.map((day, index) => (
                   <div key={index} className="flex">
-                    <div className="flex-shrink-0 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
                       {day.day}
                     </div>
                     <div>
@@ -374,7 +374,7 @@ const Tourdetails = () => {
 
               <Link
                 to="/booking"
-                className="w-full block text-center py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+                className="w-full block text-center py-4 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
               >
                 Book Now
               </Link>

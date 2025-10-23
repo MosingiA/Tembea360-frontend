@@ -58,7 +58,7 @@ const ServicesSection = () => {
                 key={index}
                 className={`${isDark ? 'bg-gray-900' : 'bg-white'} p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group`}
               >
-                <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-400 to-green-700 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
                   <IconComponent className="text-white" size={32} />
                 </div>
                 

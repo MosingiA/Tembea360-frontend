@@ -114,12 +114,12 @@ const Payment = () => {
             <h3 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Booking Reference
             </h3>
-            <p className="text-blue-500 font-mono text-lg">TM360-{Date.now().toString().slice(-6)}</p>
+            <p className="text-green-500 font-mono text-lg">TM360-{Date.now().toString().slice(-6)}</p>
           </div>
           
           <button
             onClick={() => window.location.href = '/'}
-            className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+            className="w-full py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
           >
             Return to Home
           </button>
@@ -255,7 +255,7 @@ const Payment = () => {
                             onChange={handleCardNumberChange}
                             placeholder="1234 5678 9012 3456"
                             maxLength="19"
-                            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                             required
                           />
                         </div>
@@ -274,7 +274,7 @@ const Payment = () => {
                               onChange={handleExpiryChange}
                               placeholder="MM/YY"
                               maxLength="5"
-                              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                               required
                             />
                           </div>
@@ -292,7 +292,7 @@ const Payment = () => {
                               onChange={(e) => handleInputChange('cvv', e.target.value.replace(/\D/g, '').slice(0, 4))}
                               placeholder="123"
                               maxLength="4"
-                              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                               required
                             />
                           </div>
@@ -310,7 +310,7 @@ const Payment = () => {
                             value={paymentData.cardholderName}
                             onChange={(e) => handleInputChange('cardholderName', e.target.value)}
                             placeholder="John Doe"
-                            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                             required
                           />
                         </div>
@@ -333,7 +333,7 @@ const Payment = () => {
                           type="text"
                           value={paymentData.billingAddress.street}
                           onChange={(e) => handleInputChange('billingAddress.street', e.target.value)}
-                          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                           required
                         />
                       </div>
@@ -347,7 +347,7 @@ const Payment = () => {
                             type="text"
                             value={paymentData.billingAddress.city}
                             onChange={(e) => handleInputChange('billingAddress.city', e.target.value)}
-                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                             required
                           />
                         </div>
@@ -360,7 +360,7 @@ const Payment = () => {
                             type="text"
                             value={paymentData.billingAddress.zipCode}
                             onChange={(e) => handleInputChange('billingAddress.zipCode', e.target.value)}
-                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                             required
                           />
                         </div>
@@ -373,7 +373,7 @@ const Payment = () => {
                         <select
                           value={paymentData.billingAddress.country}
                           onChange={(e) => handleInputChange('billingAddress.country', e.target.value)}
-                          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                           required
                         >
                           <option value="">Select Country</option>
@@ -389,7 +389,7 @@ const Payment = () => {
                   <button
                     type="submit"
                     disabled={processing}
-                    className="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-4 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {processing ? (
                       <div className="flex items-center justify-center">
@@ -405,7 +405,7 @@ const Payment = () => {
 
               {paymentMethod === 'paypal' && (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white text-2xl font-bold">P</span>
                   </div>
                   <h3 className={`text-xl font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -423,7 +423,7 @@ const Payment = () => {
                       }, 2000);
                     }}
                     disabled={processing}
-                    className="px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
+                    className="px-8 py-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50"
                   >
                     {processing ? 'Redirecting...' : 'Continue with PayPal'}
                   </button>

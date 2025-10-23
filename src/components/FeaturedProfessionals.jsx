@@ -73,7 +73,7 @@ const FeaturedProfessionals = () => {
                   {professional.name}
                 </h3>
                 
-                <p className="text-blue-500 font-medium mb-2">{professional.specialty}</p>
+                <p className="text-green-500 font-medium mb-2">{professional.specialty}</p>
                 
                 <div className={`flex items-center mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   <MapPin size={16} className="mr-1" />
@@ -93,7 +93,7 @@ const FeaturedProfessionals = () => {
                   
                   <Link
                     to="/booking"
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
                   >
                     Book Now
                   </Link>

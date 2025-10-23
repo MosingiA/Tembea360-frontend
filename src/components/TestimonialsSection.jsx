@@ -47,7 +47,7 @@ const TestimonialsSection = () => {
               key={index}
               className={`${isDark ? 'bg-gray-900' : 'bg-white'} p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 relative`}
             >
-              <Quote className="text-blue-500 mb-4" size={32} />
+              <Quote className="text-green-500 mb-4" size={32} />
               
               <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6 leading-relaxed`}>
                 "{testimonial.text}"

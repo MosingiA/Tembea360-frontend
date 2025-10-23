@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
-import HeroSection from '../components/HeroSection';
+import HeroSection from '../Components/HeroSection';
 import SubscriptionPlans from '../components/SubscriptionPlans';
 import ServicesSection from '../components/ServicesSection';
 import FeaturedProfessionals from '../components/FeaturedProfessionals';
 import TestimonialsSection from '../components/TestimonialsSection';
 import HowEventConnectWorks from '../components/HowEventConnectWorks';
 import TopDestinations from '../components/TopDestinations';
-import Footer from '../components/Footer';
+import Footer from '../Components/Footer';
 
 const Homepage = () => {
   const { isDark } = useTheme();

@@ -70,10 +70,10 @@ const Profile = () => {
       {/* Profile Header */}
       <div className="flex items-center space-x-6">
         <div className="relative">
-          <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-24 h-24 bg-gradient-to-r from-green-400 to-green-700 rounded-full flex items-center justify-center">
             <User className="text-white" size={40} />
           </div>
-          <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
+          <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
             <Camera size={16} />
           </button>
         </div>
@@ -85,7 +85,7 @@ const Profile = () => {
             </h2>
             <button
               onClick={() => setIsEditing(!isEditing)}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              className="flex items-center space-x-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
             >
               <Edit3 size={16} />
               <span>{isEditing ? 'Cancel' : 'Edit Profile'}</span>
@@ -125,7 +125,7 @@ const Profile = () => {
             value={profileData.lastName}
             onChange={(e) => handleInputChange('lastName', e.target.value)}
             disabled={!isEditing}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
               isEditing 
                 ? isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
                 : isDark ? 'bg-gray-800 border-gray-700 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-500'
@@ -144,7 +144,7 @@ const Profile = () => {
               value={profileData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
               disabled={!isEditing}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                 isEditing 
                   ? isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
                   : isDark ? 'bg-gray-800 border-gray-700 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-500'
@@ -164,7 +164,7 @@ const Profile = () => {
               value={profileData.phone}
               onChange={(e) => handleInputChange('phone', e.target.value)}
               disabled={!isEditing}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                 isEditing 
                   ? isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
                   : isDark ? 'bg-gray-800 border-gray-700 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-500'
@@ -184,7 +184,7 @@ const Profile = () => {
               value={profileData.location}
               onChange={(e) => handleInputChange('location', e.target.value)}
               disabled={!isEditing}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                 isEditing 
                   ? isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
                   : isDark ? 'bg-gray-800 border-gray-700 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-500'
@@ -204,7 +204,7 @@ const Profile = () => {
               value={profileData.dateOfBirth}
               onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
               disabled={!isEditing}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                 isEditing 
                   ? isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
                   : isDark ? 'bg-gray-800 border-gray-700 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-500'
@@ -223,7 +223,7 @@ const Profile = () => {
           onChange={(e) => handleInputChange('bio', e.target.value)}
           disabled={!isEditing}
           rows={4}
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
             isEditing 
               ? isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
               : isDark ? 'bg-gray-800 border-gray-700 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-500'
@@ -318,7 +318,7 @@ const Profile = () => {
                 onClick={() => setActiveTab('profile')}
                 className={`px-6 py-4 font-medium text-sm ${
                   activeTab === 'profile'
-                    ? 'border-b-2 border-blue-500 text-blue-500'
+                    ? 'border-b-2 border-green-500 text-green-500'
                     : isDark ? 'text-gray-300 hover:text-white' : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
@@ -328,7 +328,7 @@ const Profile = () => {
                 onClick={() => setActiveTab('bookings')}
                 className={`px-6 py-4 font-medium text-sm ${
                   activeTab === 'bookings'
-                    ? 'border-b-2 border-blue-500 text-blue-500'
+                    ? 'border-b-2 border-green-500 text-green-500'
                     : isDark ? 'text-gray-300 hover:text-white' : 'text-gray-500 hover:text-gray-700'
                 }`}
               >

@@ -47,14 +47,14 @@ const HowEventConnectWorks = () => {
               <div key={index} className="text-center group">
                 <div className="relative mb-8">
                   <div className={`flex items-center justify-center w-20 h-20 mx-auto ${isDark ? 'bg-gray-800' : 'bg-gray-100'} rounded-full group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="text-blue-500" size={32} />
+                    <IconComponent className="text-green-500" size={32} />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-400 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-sm">
                     {index + 1}
                   </div>
                   
                   {index < steps.length - 1 && (
-                    <div className="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 opacity-30"></div>
+                    <div className="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-green-400 to-green-700 opacity-30"></div>
                   )}
                 </div>
                 
@@ -71,7 +71,7 @@ const HowEventConnectWorks = () => {
         </div>
 
         <div className="text-center mt-16">
-          <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+          <button className="px-8 py-4 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
             Start Your Journey Today
           </button>
         </div>

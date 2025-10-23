@@ -40,7 +40,7 @@ const Contact = () => {
           <div className="space-y-8">
             <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg`}>
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
                   <Mail className="text-white" size={24} />
                 </div>
                 <div>
@@ -64,7 +64,7 @@ const Contact = () => {
 
             <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-2xl shadow-lg`}>
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
                   <MapPin className="text-white" size={24} />
                 </div>
                 <div>
@@ -90,7 +90,7 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                   required
                 />
               </div>
@@ -104,7 +104,7 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                   required
                 />
               </div>
@@ -118,7 +118,7 @@ const Contact = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                   required
                 />
               </div>
@@ -132,14 +132,14 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={5}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
                   required
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all duration-300"
+                className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg hover:shadow-lg transition-all duration-300"
               >
                 <Send size={20} />
                 <span>Send Message</span>
