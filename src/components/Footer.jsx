@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-green-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">T</span>
               </div>
               <span className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -29,7 +29,7 @@ const Footer = () => {
               <a href="#" className="text-blue-500 hover:text-blue-600 transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-blue-500 hover:text-blue-600 transition-colors">
+              <a href="#" className="text-purple-500 hover:text-orange-600 transition-colors">
                 <Instagram size={20} />
               </a>
             </div>

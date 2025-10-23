@@ -90,7 +90,7 @@ const Booking = () => {
               value={bookingData.date}
               onChange={(e) => handleInputChange('date', e.target.value)}
               min={new Date().toISOString().split('T')[0]}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
               required
             />
           </div>
@@ -105,7 +105,7 @@ const Booking = () => {
             <select
               value={bookingData.guests}
               onChange={(e) => handleInputChange('guests', parseInt(e.target.value))}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             >
               {[1,2,3,4,5,6,7,8].map(num => (
                 <option key={num} value={num}>{num} {num === 1 ? 'Guest' : 'Guests'}</option>
@@ -124,7 +124,7 @@ const Booking = () => {
           onChange={(e) => handleInputChange('specialRequests', e.target.value)}
           rows={4}
           placeholder="Any dietary restrictions, accessibility needs, or special occasions..."
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
         />
       </div>
     </div>
@@ -145,7 +145,7 @@ const Booking = () => {
             type="text"
             value={bookingData.contactInfo.firstName}
             onChange={(e) => handleInputChange('contactInfo.firstName', e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -158,7 +158,7 @@ const Booking = () => {
             type="text"
             value={bookingData.contactInfo.lastName}
             onChange={(e) => handleInputChange('contactInfo.lastName', e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -171,7 +171,7 @@ const Booking = () => {
             type="email"
             value={bookingData.contactInfo.email}
             onChange={(e) => handleInputChange('contactInfo.email', e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -184,7 +184,7 @@ const Booking = () => {
             type="tel"
             value={bookingData.contactInfo.phone}
             onChange={(e) => handleInputChange('contactInfo.phone', e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -261,7 +261,7 @@ const Booking = () => {
         </div>
 
         <div className={`${isDark ? 'bg-blue-900/20' : 'bg-blue-50'} border border-blue-200 rounded-lg p-4`}>
-          <p className={`text-sm ${isDark ? 'text-blue-300' : 'text-blue-800'}`}>
+          <p className={`text-sm ${isDark ? 'text-green-300' : 'text-green-800'}`}>
             By confirming this booking, you agree to our terms and conditions. 
             A confirmation email will be sent to {bookingData.contactInfo.email}.
           </p>
@@ -345,7 +345,7 @@ const Booking = () => {
                     </span>
                     {stepNum < 3 && (
                       <div className={`w-16 h-0.5 ml-4 ${
-                        step > stepNum ? 'bg-blue-500' : isDark ? 'bg-gray-700' : 'bg-gray-200'
+                        step > stepNum ? 'bg-green-500' : isDark ? 'bg-gray-700' : 'bg-gray-200'
                       }`}></div>
                     )}
                   </div>
@@ -374,7 +374,7 @@ const Booking = () => {
                   
                   <button
                     type="submit"
-                    className="ml-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+                    className="ml-auto px-8 py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
                   >
                     {step === 3 ? 'Confirm Booking' : 'Continue'}
                   </button>

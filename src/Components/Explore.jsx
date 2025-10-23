@@ -106,7 +106,7 @@ const Explore = () => {
                 
                 <Link
                   to="/booking"
-                  className="w-full block text-center py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+                  className="w-full block text-center py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
                 >
                   Book Now
                 </Link>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { Users, Award, Globe, Heart } from 'lucide-react';
+import aboutHeroBg from '../assets/images/about-hero-bg.jpg';
 
 const About = () => {
   const { isDark } = useTheme();
@@ -35,14 +36,21 @@ const About = () => {
 
   return (
     <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
-      {/* Hero Section */}
-      <section className={`py-20 ${isDark ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 to-indigo-100'}`}>
+      {/* Hero Section with background image */}
+      <section 
+      className="py-32 bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: isDark
+          ? `linear-gradient(to bottom, rgba(17, 24, 39, 0.2), rgba(17, 24, 39, 0.6)), url(${aboutHeroBg})`
+          : `linear-gradient(to bottom, rgba(239, 246, 255, 0.2), rgba(224, 231, 255, 0.6)), url(${aboutHeroBg})`,
+      }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className={`text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               About Tembea360
             </h1>
-            <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto leading-relaxed`}>
+            <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-white-600'} max-w-3xl mx-auto leading-relaxed`}>
               We are passionate about creating authentic travel experiences that connect people with cultures, 
               nature, and communities around the world. Our mission is to make travel meaningful, sustainable, 
               and accessible to everyone.
@@ -60,7 +68,7 @@ const About = () => {
               return (
                 <div key={index} className="text-center">
                   <div className={`inline-flex items-center justify-center w-16 h-16 ${isDark ? 'bg-gray-700' : 'bg-white'} rounded-full shadow-lg mb-4`}>
-                    <IconComponent className="text-blue-500" size={32} />
+                    <IconComponent className="text-green-500" size={32} />
                   </div>
                   <h3 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {stat.value}
@@ -127,7 +135,7 @@ const About = () => {
                 <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {member.name}
                 </h3>
-                <p className="text-blue-500 font-medium mb-4">{member.role}</p>
+                <p className="text-green-500 font-medium mb-4">{member.role}</p>
                 <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
                   {member.bio}
                 </p>

@@ -111,7 +111,7 @@ const ProfessionalSetup = () => {
       {/* Profile Image Upload */}
       <div className="flex items-center space-x-6">
         <div className="relative">
-          <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-24 h-24 bg-gradient-to-r from-green-400 to-green-700 rounded-full flex items-center justify-center">
             {profileData.personalInfo.profileImage ? (
               <img
                 src={URL.createObjectURL(profileData.personalInfo.profileImage)}
@@ -122,7 +122,7 @@ const ProfessionalSetup = () => {
               <User className="text-white" size={40} />
             )}
           </div>
-          <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors cursor-pointer">
+          <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors cursor-pointer">
             <Camera size={16} />
             <input
               type="file"
@@ -151,7 +151,7 @@ const ProfessionalSetup = () => {
             type="text"
             value={profileData.personalInfo.firstName}
             onChange={(e) => handleInputChange('personalInfo', 'firstName', e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -164,7 +164,7 @@ const ProfessionalSetup = () => {
             type="text"
             value={profileData.personalInfo.lastName}
             onChange={(e) => handleInputChange('personalInfo', 'lastName', e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -177,7 +177,7 @@ const ProfessionalSetup = () => {
             type="email"
             value={profileData.personalInfo.email}
             onChange={(e) => handleInputChange('personalInfo', 'email', e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -190,7 +190,7 @@ const ProfessionalSetup = () => {
             type="tel"
             value={profileData.personalInfo.phone}
             onChange={(e) => handleInputChange('personalInfo', 'phone', e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -207,7 +207,7 @@ const ProfessionalSetup = () => {
             value={profileData.personalInfo.location}
             onChange={(e) => handleInputChange('personalInfo', 'location', e.target.value)}
             placeholder="City, Country"
-            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -222,7 +222,7 @@ const ProfessionalSetup = () => {
           onChange={(e) => handleInputChange('personalInfo', 'bio', e.target.value)}
           rows={4}
           placeholder="Tell potential clients about yourself, your passion for guiding, and what makes you unique..."
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
           required
         />
       </div>
@@ -244,7 +244,7 @@ const ProfessionalSetup = () => {
           {profileData.professionalInfo.specialties.map((specialty, index) => (
             <span
               key={index}
-              className="flex items-center px-3 py-1 bg-blue-500 text-white rounded-full text-sm"
+              className="flex items-center px-3 py-1 bg-green-500 text-white rounded-full text-sm"
             >
               {specialty}
               <button
@@ -264,7 +264,7 @@ const ProfessionalSetup = () => {
               e.target.value = '';
             }
           }}
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
         >
           <option value="">Select a specialty</option>
           {specialtyOptions.filter(option => !profileData.professionalInfo.specialties.includes(option)).map(option => (
@@ -302,7 +302,7 @@ const ProfessionalSetup = () => {
               e.target.value = '';
             }
           }}
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
         >
           <option value="">Select a language</option>
           {languageOptions.filter(option => !profileData.professionalInfo.languages.includes(option)).map(option => (
@@ -321,7 +321,7 @@ const ProfessionalSetup = () => {
             value={profileData.professionalInfo.experience}
             onChange={(e) => handleInputChange('professionalInfo', 'experience', e.target.value)}
             min="0"
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             required
           />
         </div>
@@ -337,7 +337,7 @@ const ProfessionalSetup = () => {
               value={profileData.professionalInfo.hourlyRate}
               onChange={(e) => handleInputChange('professionalInfo', 'hourlyRate', e.target.value)}
               min="0"
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
               required
             />
           </div>
@@ -360,7 +360,7 @@ const ProfessionalSetup = () => {
               />
               <div className={`p-3 rounded-lg cursor-pointer transition-colors ${
                 profileData.professionalInfo.availability[day]
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-green-500 text-white'
                   : isDark ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}>
                 <div className="text-xs font-medium">
@@ -389,7 +389,7 @@ const ProfessionalSetup = () => {
           onChange={(e) => handleInputChange('portfolio', 'description', e.target.value)}
           rows={4}
           placeholder="Describe your guiding style, memorable experiences you've created, and what clients can expect..."
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
         />
       </div>
 
@@ -419,7 +419,7 @@ const ProfessionalSetup = () => {
             </div>
           ))}
           {profileData.portfolio.images.length < 6 && (
-            <label className={`w-full h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-colors ${isDark ? 'border-gray-600 text-gray-400' : 'border-gray-300 text-gray-500'}`}>
+            <label className={`w-full h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-green-500 transition-colors ${isDark ? 'border-gray-600 text-gray-400' : 'border-gray-300 text-gray-500'}`}>
               <Upload size={24} className="mb-2" />
               <span className="text-sm">Add Image</span>
               <input
@@ -450,7 +450,7 @@ const ProfessionalSetup = () => {
           {profileData.portfolio.highlights.map((highlight, index) => (
             <span
               key={index}
-              className="flex items-center px-3 py-1 bg-purple-500 text-white rounded-full text-sm"
+              className="flex items-center px-3 py-1 bg-green-700 text-white rounded-full text-sm"
             >
               {highlight}
               <button
@@ -467,7 +467,7 @@ const ProfessionalSetup = () => {
           <input
             type="text"
             placeholder="Add a highlight (e.g., 'Big Five Expert', 'Cultural Specialist')"
-            className={`flex-1 px-4 py-3 border rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            className={`flex-1 px-4 py-3 border rounded-l-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && e.target.value.trim()) {
                 handleArrayAdd('portfolio', 'highlights', e.target.value.trim());
@@ -484,7 +484,7 @@ const ProfessionalSetup = () => {
                 input.value = '';
               }
             }}
-            className="px-4 py-3 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition-colors"
+            className="px-4 py-3 bg-green-500 text-white rounded-r-lg hover:bg-green-600 transition-colors"
           >
             <Plus size={20} />
           </button>
@@ -530,7 +530,7 @@ const ProfessionalSetup = () => {
               <div key={stepNum} className="flex items-center">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                   step >= stepNum 
-                    ? 'bg-blue-500 text-white' 
+                    ? 'bg-green-500 text-white' 
                     : isDark ? 'bg-gray-700 text-gray-400' : 'bg-gray-200 text-gray-500'
                 }`}>
                   {stepNum}
@@ -544,7 +544,7 @@ const ProfessionalSetup = () => {
                 </span>
                 {stepNum < 3 && (
                   <div className={`w-16 h-0.5 ml-4 ${
-                    step > stepNum ? 'bg-blue-500' : isDark ? 'bg-gray-700' : 'bg-gray-200'
+                    step > stepNum ? 'bg-green-500' : isDark ? 'bg-gray-700' : 'bg-gray-200'
                   }`}></div>
                 )}
               </div>
@@ -573,7 +573,7 @@ const ProfessionalSetup = () => {
               
               <button
                 type="submit"
-                className="ml-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+                className="ml-auto px-8 py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
               >
                 {step === 3 ? 'Create Profile' : 'Continue'}
               </button>

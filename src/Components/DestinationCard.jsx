@@ -17,7 +17,7 @@ const DestinationCard = ({ destination, onBook, onViewDetails }) => {
         <div className="absolute top-4 left-4">
           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
             destination.featured 
-              ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white' 
+              ? 'bg-gradient-to-r from-green-400 to-green-700 text-white' 
               : isDark ? 'bg-gray-700 text-gray-300' : 'bg-white/90 text-gray-700'
           }`}>
             {destination.featured ? 'Featured' : destination.category}
@@ -97,7 +97,7 @@ const DestinationCard = ({ destination, onBook, onViewDetails }) => {
           </Link>
           <Link
             to="/booking"
-            className="flex-1 block text-center py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+            className="flex-1 block text-center py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
           >
             Book Now
           </Link>
