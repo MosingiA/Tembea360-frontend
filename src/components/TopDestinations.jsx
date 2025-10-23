@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MapPin, Star } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
@@ -76,7 +77,7 @@ const TopDestinations = () => {
   ];
 
   const DestinationCard = ({ destination }) => (
-    <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer`}>
+    <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}>
       <div className="relative">
         <img
           src={destination.image}
@@ -106,6 +107,13 @@ const TopDestinations = () => {
             </span>
           </div>
         </div>
+        
+        <Link
+          to="/booking"
+          className="mt-4 w-full block text-center py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+        >
+          Book Now
+        </Link>
       </div>
     </div>
   );
