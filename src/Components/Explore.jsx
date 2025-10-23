@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { MapPin, Star, Clock, Users } from 'lucide-react';
 
@@ -103,9 +104,12 @@ const Explore = () => {
                   </div>
                 </div>
                 
-                <button className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                <Link
+                  to="/booking"
+                  className="w-full block text-center py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+                >
                   Book Now
-                </button>
+                </Link>
               </div>
             </div>
           ))}

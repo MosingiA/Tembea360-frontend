@@ -85,16 +85,16 @@ const DestinationCard = ({ destination, onBook, onViewDetails }) => {
         </div>
         
         <div className="flex gap-3">
-          <button 
-            onClick={() => onViewDetails?.(destination)}
-            className={`flex-1 py-3 border rounded-lg font-semibold transition-all duration-300 ${
+          <Link
+            to="/tourdetails"
+            className={`flex-1 block text-center py-3 border rounded-lg font-semibold transition-all duration-300 ${
               isDark 
                 ? 'border-gray-600 text-gray-300 hover:bg-gray-700' 
                 : 'border-gray-300 text-gray-700 hover:bg-gray-50'
             }`}
           >
             View Details
-          </button>
+          </Link>
           <Link
             to="/booking"
             className="flex-1 block text-center py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"

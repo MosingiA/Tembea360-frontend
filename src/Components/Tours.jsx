@@ -128,13 +128,11 @@ const Tours = () => {
   });
 
   const handleBookTour = (tour) => {
-    console.log('Booking tour:', tour);
-    // Navigate to booking page or open booking modal
+    window.location.href = '/booking';
   };
 
   const handleViewDetails = (tour) => {
-    console.log('Viewing tour details:', tour);
-    // Navigate to tour details page
+    window.location.href = '/tourdetails';
   };
 
   return (
