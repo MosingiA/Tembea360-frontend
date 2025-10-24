@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Eye, EyeOff, Users, Briefcase } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, Users, Briefcase, Camera } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -11,6 +11,7 @@ const Signup = () => {
     password: '',
     confirmPassword: '',
     userType: 'traveler',
+    profilePicture: null,
     // Professional fields
     company: '',
     specialty: '',
@@ -26,7 +27,11 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.type === 'file') {
+      setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -44,7 +49,8 @@ const Signup = () => {
         id: 1, 
         name: formData.name, 
         email: formData.email, 
-        userType: formData.userType 
+        userType: formData.userType,
+        profilePicture: formData.profilePicture ? URL.createObjectURL(formData.profilePicture) : null
       };
       const token = 'mock-jwt-token';
       login(userData, token);
@@ -68,6 +74,33 @@ const Signup = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Profile Picture Upload */}
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <div className="w-24 h-24 bg-gradient-to-r from-green-400 to-green-700 rounded-full flex items-center justify-center overflow-hidden">
+                {formData.profilePicture ? (
+                  <img
+                    src={URL.createObjectURL(formData.profilePicture)}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <User className="text-white" size={40} />
+                )}
+              </div>
+              <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors cursor-pointer">
+                <Camera size={16} />
+                <input
+                  type="file"
+                  name="profilePicture"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
+          </div>
+
           {/* User Type Selection */}
           <div>
             <label className={`block text-sm font-medium mb-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>

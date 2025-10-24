@@ -10,14 +10,15 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState('profile');
   
   const [profileData, setProfileData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
+    firstName: user?.name?.split(' ')[0] || 'John',
+    lastName: user?.name?.split(' ').slice(1).join(' ') || 'Doe',
+    email: user?.email || 'john.doe@example.com',
     phone: '+254 700 123 456',
     location: 'Nairobi, Kenya',
     bio: 'Adventure enthusiast and travel lover. Always looking for the next great experience!',
     dateOfBirth: '1990-05-15',
-    interests: ['Safari', 'Cultural Tours', 'Adventure Sports', 'Photography']
+    interests: ['Safari', 'Cultural Tours', 'Adventure Sports', 'Photography'],
+    profilePicture: user?.profilePicture || null
   });
 
   const [bookingHistory] = useState([
@@ -70,12 +71,31 @@ const Profile = () => {
       {/* Profile Header */}
       <div className="flex items-center space-x-6">
         <div className="relative">
-          <div className="w-24 h-24 bg-gradient-to-r from-green-400 to-green-700 rounded-full flex items-center justify-center">
-            <User className="text-white" size={40} />
+          <div className="w-24 h-24 bg-gradient-to-r from-green-400 to-green-700 rounded-full flex items-center justify-center overflow-hidden">
+            {profileData.profilePicture ? (
+              <img
+                src={profileData.profilePicture}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <User className="text-white" size={40} />
+            )}
           </div>
-          <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
+          <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors cursor-pointer">
             <Camera size={16} />
-          </button>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files[0]) {
+                  const imageUrl = URL.createObjectURL(e.target.files[0]);
+                  handleInputChange('profilePicture', imageUrl);
+                }
+              }}
+              className="hidden"
+            />
+          </label>
         </div>
         
         <div className="flex-1">

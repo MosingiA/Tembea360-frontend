@@ -98,8 +98,20 @@ const Navbar = () => {
                 )}
                 
                 <Link to="/profile" className="flex items-center space-x-2 hover:text-blue-500 transition-colors">
-                  <User size={20} />
-                  <span className={isDark ? 'text-gray-300' : 'text-gray-700'}>Profile</span>
+                  {user.profilePicture ? (
+                    <img
+                      src={user.profilePicture}
+                      alt={user.name}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-green-700 rounded-full flex items-center justify-center">
+                      <User className="text-white" size={16} />
+                    </div>
+                  )}
+                  <span className={isDark ? 'text-gray-300' : 'text-gray-700'}>
+                    {user.name || 'Profile'}
+                  </span>
                 </Link>
                 <button
                   onClick={handleLogout}
@@ -153,8 +165,19 @@ const Navbar = () => {
               
               {user ? (
                 <>
-                  <Link to="/profile" className={`block px-3 py-2 hover:bg-gray-100 ${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700'}`}>
-                    Profile
+                  <Link to="/profile" className={`flex items-center px-3 py-2 hover:bg-gray-100 ${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700'}`}>
+                    {user.profilePicture ? (
+                      <img
+                        src={user.profilePicture}
+                        alt={user.name}
+                        className="w-6 h-6 rounded-full object-cover mr-2"
+                      />
+                    ) : (
+                      <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-green-700 rounded-full flex items-center justify-center mr-2">
+                        <User className="text-white" size={12} />
+                      </div>
+                    )}
+                    {user.name || 'Profile'}
                   </Link>
                   <button
                     onClick={handleLogout}

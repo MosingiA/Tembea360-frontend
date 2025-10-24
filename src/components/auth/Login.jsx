@@ -53,7 +53,12 @@ const Login = () => {
     if (verificationCode === sentCode) {
       // Successful verification
       setTimeout(() => {
-        const userData = { id: 1, name: 'John Doe', email: formData.email };
+        const userData = { 
+          id: 1, 
+          name: 'John Doe', 
+          email: formData.email,
+          profilePicture: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+        };
         const token = 'mock-jwt-token';
         login(userData, token);
         navigate('/');
