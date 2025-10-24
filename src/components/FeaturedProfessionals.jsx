@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Star, MapPin } from 'lucide-react';
+import { Star, MapPin, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 const FeaturedProfessionals = () => {
   const { isDark } = useTheme();
+  const { user } = useAuth();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [allProfessionals, setAllProfessionals] = useState([]);
 
-  const professionals = [
+  const baseProfessionals = [
     {
       id: 1,
       name: "Sarah Johnson",
@@ -39,8 +44,99 @@ const FeaturedProfessionals = () => {
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
       price: "$45/day",
       category: "cultural"
+    },
+    {
+      id: 4,
+      name: "David Kimani",
+      specialty: "Mountain Guide",
+      location: "Mount Kenya",
+      rating: 4.7,
+      reviews: 92,
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+      price: "$60/day",
+      category: "adventure"
+    },
+    {
+      id: 5,
+      name: "Grace Wanjiku",
+      specialty: "Beach Guide",
+      location: "Diani Beach",
+      rating: 4.6,
+      reviews: 78,
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face",
+      price: "$40/day",
+      category: "beach"
+    },
+    {
+      id: 6,
+      name: "James Mwangi",
+      specialty: "Safari Expert",
+      location: "Amboseli",
+      rating: 4.8,
+      reviews: 134,
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
+      price: "$80/day",
+      category: "wildlife"
     }
   ];
+
+  useEffect(() => {
+    let professionals = [...baseProfessionals];
+    
+    // Add current user if they're a professional
+    if (user && user.userType === 'professional') {
+      const userProfessional = {
+        id: 'user',
+        name: user.name,
+        specialty: user.specialty || 'Tour Guide',
+        location: user.location || 'Kenya',
+        rating: 4.5,
+        reviews: 0,
+        image: user.profilePicture || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
+        price: '$50/day',
+        category: user.specialty?.toLowerCase().includes('wildlife') ? 'wildlife' : 
+                 user.specialty?.toLowerCase().includes('cultural') ? 'cultural' :
+                 user.specialty?.toLowerCase().includes('adventure') ? 'adventure' : 'general',
+        isCurrentUser: true
+      };
+      professionals.unshift(userProfessional);
+    }
+    
+    setAllProfessionals(professionals);
+  }, [user]);
+
+  const specialties = ['All', 'Wildlife Expert', 'Adventure Guide', 'Cultural Guide', 'Beach Guide', 'Safari Expert', 'Mountain Guide'];
+  
+  const filteredProfessionals = selectedFilter === 'All' 
+    ? allProfessionals 
+    : allProfessionals.filter(prof => prof.specialty === selectedFilter);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 3) % filteredProfessionals.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 3 + filteredProfessionals.length) % filteredProfessionals.length);
+  };
+
+  const getCurrentProfessionals = () => {
+    const professionals = [];
+    for (let i = 0; i < 3; i++) {
+      const index = (currentIndex + i) % filteredProfessionals.length;
+      if (filteredProfessionals[index]) {
+        professionals.push(filteredProfessionals[index]);
+      }
+    }
+    return professionals;
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000); // Auto-rotate every 5 seconds
+    
+    return () => clearInterval(interval);
+  }, [filteredProfessionals.length]);
 
   return (
     <section className={`py-20 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
@@ -54,13 +150,58 @@ const FeaturedProfessionals = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {professionals.map((professional) => (
-            <Link
-              key={professional.id}
-              to={`/tours?category=${professional.category}`}
-              className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group block`}
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {specialties.map((specialty) => (
+            <button
+              key={specialty}
+              onClick={() => {
+                setSelectedFilter(specialty);
+                setCurrentIndex(0);
+              }}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                selectedFilter === specialty
+                  ? 'bg-green-500 text-white'
+                  : isDark
+                  ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
             >
+              {specialty}
+            </button>
+          ))}
+        </div>
+
+        {/* Carousel Container */}
+        <div className="relative">
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg flex items-center justify-center hover:shadow-xl transition-all duration-300`}
+          >
+            <ChevronLeft className={isDark ? 'text-white' : 'text-gray-900'} size={24} />
+          </button>
+          
+          <button
+            onClick={nextSlide}
+            className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg flex items-center justify-center hover:shadow-xl transition-all duration-300`}
+          >
+            <ChevronRight className={isDark ? 'text-white' : 'text-gray-900'} size={24} />
+          </button>
+
+          {/* Professionals Grid */}
+          <div className="grid md:grid-cols-3 gap-8 px-16">
+            {getCurrentProfessionals().map((professional) => (
+              <Link
+                key={professional.id}
+                to={`/tours?category=${professional.category}`}
+                className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group block relative`}
+              >
+                {professional.isCurrentUser && (
+                  <div className="absolute top-4 left-4 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold z-10">
+                    You
+                  </div>
+                )}
               <div className="relative">
                 <img
                   src={professional.image}
@@ -107,8 +248,34 @@ const FeaturedProfessionals = () => {
                   </button>
                 </div>
               </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
+          
+          {/* Dots Indicator */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {Array.from({ length: Math.ceil(filteredProfessionals.length / 3) }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index * 3)}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  Math.floor(currentIndex / 3) === index
+                    ? 'bg-green-500'
+                    : isDark
+                    ? 'bg-gray-600'
+                    : 'bg-gray-300'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        
+        {/* Results Count */}
+        <div className="text-center mt-6">
+          <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            Showing {filteredProfessionals.length} professional{filteredProfessionals.length !== 1 ? 's' : ''}
+            {selectedFilter !== 'All' && ` specializing in ${selectedFilter}`}
+          </p>
         </div>
       </div>
     </section>
