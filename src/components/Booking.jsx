@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { Calendar, Users, MapPin, Clock, Star, CreditCard } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { Calendar, Users, MapPin, Clock, Star, CreditCard, Mail, CheckCircle } from 'lucide-react';
 
 const Booking = () => {
   const { isDark } = useTheme();
+  const { user } = useAuth();
   const [step, setStep] = useState(1);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [bookingReference, setBookingReference] = useState('');
   const [bookingData, setBookingData] = useState({
     tour: null,
     date: '',
@@ -61,14 +65,64 @@ const Booking = () => {
     };
   };
 
+  const sendBookingConfirmationEmail = (bookingDetails) => {
+    const emailContent = {
+      to: bookingDetails.contactInfo.email,
+      subject: `Booking Confirmation - ${selectedTour.name}`,
+      body: `
+        Dear ${bookingDetails.contactInfo.firstName} ${bookingDetails.contactInfo.lastName},
+        
+        Thank you for booking with Tembea360! Your tour booking has been confirmed.
+        
+        BOOKING DETAILS:
+        - Tour: ${selectedTour.name}
+        - Date: ${bookingDetails.date}
+        - Guests: ${bookingDetails.guests}
+        - Total: $${calculateTotal().total.toFixed(2)}
+        - Reference: ${bookingReference}
+        
+        We will send you detailed itinerary and preparation information 48 hours before your tour.
+        
+        For any questions, please contact us at support@tembea360.com
+        
+        Best regards,
+        The Tembea360 Team
+      `
+    };
+    
+    // Simulate email sending
+    console.log('Booking confirmation email sent:', emailContent);
+    return emailContent;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (step < 3) {
       setStep(step + 1);
     } else {
+      // Generate booking reference
+      const reference = `TM360-${Date.now().toString().slice(-6)}`;
+      setBookingReference(reference);
+      
       // Process booking
-      console.log('Booking submitted:', bookingData);
-      alert('Booking confirmed! You will receive a confirmation email shortly.');
+      const bookingDetails = {
+        ...bookingData,
+        reference,
+        tour: selectedTour,
+        pricing: calculateTotal(),
+        timestamp: new Date().toISOString()
+      };
+      
+      console.log('Booking submitted:', bookingDetails);
+      
+      // Send confirmation email
+      const emailDetails = sendBookingConfirmationEmail(bookingDetails);
+      
+      // Show confirmation
+      setBookingConfirmed(true);
+      
+      // Demo alert showing email was sent
+      alert(`Booking confirmed! Confirmation email sent to ${bookingData.contactInfo.email}\n\nEmail Preview:\nSubject: ${emailDetails.subject}\nReference: ${reference}`);
     }
   };
 
@@ -261,14 +315,73 @@ const Booking = () => {
         </div>
 
         <div className={`${isDark ? 'bg-blue-900/20' : 'bg-blue-50'} border border-blue-200 rounded-lg p-4`}>
+          <div className="flex items-start">
+            <Mail className="text-blue-500 mr-2 mt-0.5" size={16} />
+            <div>
+              <p className={`text-sm ${isDark ? 'text-blue-300' : 'text-blue-800'} font-medium mb-1`}>
+                Email Confirmation
+              </p>
+              <p className={`text-sm ${isDark ? 'text-blue-300' : 'text-blue-800'}`}>
+                A detailed confirmation email with your booking reference, itinerary, and preparation instructions will be sent to {bookingData.contactInfo.email} immediately after confirmation.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className={`${isDark ? 'bg-green-900/20' : 'bg-green-50'} border border-green-200 rounded-lg p-4`}>
           <p className={`text-sm ${isDark ? 'text-green-300' : 'text-green-800'}`}>
-            By confirming this booking, you agree to our terms and conditions. 
-            A confirmation email will be sent to {bookingData.contactInfo.email}.
+            By confirming this booking, you agree to our terms and conditions.
           </p>
         </div>
       </div>
     );
   };
+
+  if (bookingConfirmed) {
+    return (
+      <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'} flex items-center justify-center`}>
+        <div className={`max-w-md w-full mx-4 ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg p-8 text-center`}>
+          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="text-white" size={32} />
+          </div>
+          
+          <h2 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            Booking Confirmed!
+          </h2>
+          
+          <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
+            Thank you for booking with Tembea360. Your adventure awaits!
+          </p>
+          
+          <div className={`${isDark ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4 mb-6`}>
+            <h3 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              Booking Reference
+            </h3>
+            <p className="text-green-500 font-mono text-lg">{bookingReference}</p>
+          </div>
+          
+          <div className={`${isDark ? 'bg-blue-900/20' : 'bg-blue-50'} border border-blue-200 rounded-lg p-4 mb-6`}>
+            <div className="flex items-center justify-center mb-2">
+              <Mail className="text-blue-500 mr-2" size={20} />
+              <span className={`font-medium ${isDark ? 'text-blue-300' : 'text-blue-800'}`}>
+                Email Sent!
+              </span>
+            </div>
+            <p className={`text-sm ${isDark ? 'text-blue-300' : 'text-blue-800'}`}>
+              Confirmation details sent to {bookingData.contactInfo.email}
+            </p>
+          </div>
+          
+          <button
+            onClick={() => window.location.href = '/'}
+            className="w-full py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+          >
+            Return to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
