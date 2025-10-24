@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { Users, Award, Globe, Heart } from 'lucide-react';
+import aboutHeroBg from '../assets/images/about-hero-bg.jpg';
 
 
 const About = () => {
