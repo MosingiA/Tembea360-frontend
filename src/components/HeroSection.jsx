@@ -2,20 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Search, MapPin, Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import heroBg from '../assets/images/hero-bg.jpg';
+
 
 const HeroSection = () => {
   const { isDark } = useTheme();
 
   return (
-    <section
-      className="pt-16 min-h-screen flex items-center bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: isDark
-          ? `linear-gradient(to bottom, rgba(17, 24, 39, 0.2), rgba(17, 24, 39, 0.6)), url(${heroBg})`
-          : `linear-gradient(to bottom, rgba(239, 246, 255, 0.2), rgba(224, 231, 255, 0.6)), url(${heroBg})`,
-      }}      
-    >
+    <section className={`pt-16 min-h-screen flex items-center ${isDark ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 to-indigo-100'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Section */}
