@@ -5,9 +5,9 @@ import SubscriptionPlans from '../components/SubscriptionPlans';
 import ServicesSection from '../components/ServicesSection';
 import FeaturedProfessionals from '../components/FeaturedProfessionals';
 import TestimonialsSection from '../components/TestimonialsSection';
-import HowEventConnectWorks from '../components/HowEventConnectWorks';
+import HowTembea360Works from '../components/HowTembea360Works';
 import TopDestinations from '../components/TopDestinations';
-import Footer from '../Components/Footer';
+import Footer from '../components/Footer';
 
 const Homepage = () => {
   const { isDark } = useTheme();
@@ -20,7 +20,7 @@ const Homepage = () => {
       <ServicesSection />
       <SubscriptionPlans />
       <TestimonialsSection />
-      <HowEventConnectWorks />
+      <HowTembea360Works />
       <Footer />
     </div>
   );

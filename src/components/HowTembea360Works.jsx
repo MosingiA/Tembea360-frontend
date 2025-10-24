@@ -2,7 +2,7 @@ import React from 'react';
 import { Search, Calendar, MapPin, Camera } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
-const HowEventConnectWorks = () => {
+const HowTembea360Works = () => {
   const { isDark } = useTheme();
 
   const steps = [
@@ -80,4 +80,4 @@ const HowEventConnectWorks = () => {
   );
 };
 
-export default HowEventConnectWorks;
+export default HowTembea360Works;
