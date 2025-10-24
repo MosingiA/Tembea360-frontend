@@ -38,9 +38,11 @@ const About = () => {
     <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       {/* Hero Section with background image */}
       <section 
-className="py-32 relative"
-style={{
-        backgroundColor: isDark ? '#1f2937' : '#f3f4f6'
+      className="py-32 bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: isDark
+          ? `linear-gradient(to bottom, rgba(17, 24, 39, 0.4), rgba(17, 24, 39, 0.85)), url(${aboutHeroBg})`
+          : `linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(224, 231, 255, 0.75)), url(${aboutHeroBg})`,
       }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
