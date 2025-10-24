@@ -13,7 +13,7 @@ import About from  './Components/About';
 import ProfessionalSetup from './Components/ProfessionalSetup';
 import Booking from './Components/Booking';
 import Explore from './Components/Explore';
-import Footer from './Components/Footer';
+import Footer from './components/Footer';
 import Payment from './Components/Payment';
 import Tourdetails from './Components/Tourdetails';
 import Tours from './Components/Tours';
