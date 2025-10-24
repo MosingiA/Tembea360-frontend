@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { User, MapPin, Camera, Award, DollarSign, Clock, Upload, Plus, X } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { User, MapPin, Camera, Award, DollarSign, Clock, Upload, Plus, X, Building } from 'lucide-react';
 
 const ProfessionalSetup = () => {
   const { isDark } = useTheme();
+  const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [profileData, setProfileData] = useState({
     personalInfo: {
@@ -14,6 +16,16 @@ const ProfessionalSetup = () => {
       location: '',
       bio: '',
       profileImage: null
+    },
+    companyInfo: {
+      companyName: '',
+      companyType: '',
+      website: '',
+      socialMedia: {
+        facebook: '',
+        instagram: '',
+        twitter: ''
+      }
     },
     professionalInfo: {
       specialties: [],
@@ -37,6 +49,34 @@ const ProfessionalSetup = () => {
       highlights: []
     }
   });
+
+  useEffect(() => {
+    // Pre-fill data from signup if available
+    if (user) {
+      const nameParts = user.name ? user.name.split(' ') : ['', ''];
+      setProfileData(prev => ({
+        ...prev,
+        personalInfo: {
+          ...prev.personalInfo,
+          firstName: nameParts[0] || '',
+          lastName: nameParts.slice(1).join(' ') || '',
+          email: user.email || '',
+          phone: user.phone || '',
+          location: user.location || '',
+          bio: user.bio || ''
+        },
+        companyInfo: {
+          ...prev.companyInfo,
+          companyName: user.company || ''
+        },
+        professionalInfo: {
+          ...prev.professionalInfo,
+          specialties: user.specialty ? [user.specialty] : [],
+          experience: user.experience || ''
+        }
+      }));
+    }
+  }, [user]);
 
   const specialtyOptions = [
     'Safari Guide', 'Cultural Guide', 'Adventure Guide', 'Wildlife Expert',
@@ -225,6 +265,93 @@ const ProfessionalSetup = () => {
           className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
           required
         />
+      </div>
+
+      {/* Company Information */}
+      <div className="pt-6 border-t border-gray-200">
+        <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          Company Information
+        </h3>
+        
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              Company/Organization Name
+            </label>
+            <div className="relative">
+              <Building className="absolute left-3 top-3 text-gray-400" size={20} />
+              <input
+                type="text"
+                value={profileData.companyInfo.companyName}
+                onChange={(e) => handleInputChange('companyInfo', 'companyName', e.target.value)}
+                placeholder="Safari Adventures Ltd"
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                required
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              Company Type
+            </label>
+            <select
+              value={profileData.companyInfo.companyType}
+              onChange={(e) => handleInputChange('companyInfo', 'companyType', e.target.value)}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+              required
+            >
+              <option value="">Select Type</option>
+              <option value="Tour Company">Tour Company</option>
+              <option value="Independent Guide">Independent Guide</option>
+              <option value="Travel Agency">Travel Agency</option>
+              <option value="Safari Operator">Safari Operator</option>
+              <option value="Cultural Center">Cultural Center</option>
+            </select>
+          </div>
+        </div>
+        
+        <div className="mt-4">
+          <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+            Website (Optional)
+          </label>
+          <input
+            type="url"
+            value={profileData.companyInfo.website}
+            onChange={(e) => handleInputChange('companyInfo', 'website', e.target.value)}
+            placeholder="https://www.yourcompany.com"
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+          />
+        </div>
+        
+        <div className="mt-4">
+          <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+            Social Media (Optional)
+          </label>
+          <div className="grid grid-cols-3 gap-4">
+            <input
+              type="url"
+              value={profileData.companyInfo.socialMedia.facebook}
+              onChange={(e) => handleInputChange('companyInfo', 'socialMedia', {...profileData.companyInfo.socialMedia, facebook: e.target.value})}
+              placeholder="Facebook URL"
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            />
+            <input
+              type="url"
+              value={profileData.companyInfo.socialMedia.instagram}
+              onChange={(e) => handleInputChange('companyInfo', 'socialMedia', {...profileData.companyInfo.socialMedia, instagram: e.target.value})}
+              placeholder="Instagram URL"
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            />
+            <input
+              type="url"
+              value={profileData.companyInfo.socialMedia.twitter}
+              onChange={(e) => handleInputChange('companyInfo', 'socialMedia', {...profileData.companyInfo.socialMedia, twitter: e.target.value})}
+              placeholder="Twitter URL"
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
