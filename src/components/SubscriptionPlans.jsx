@@ -16,44 +16,48 @@ const SubscriptionPlans = () => {
 
   const plans = [
     {
-      name: "Explorer",
-      price: "$29",
+      name: "Starter Guide",
+      price: "$49",
       period: "/month",
       features: [
-        "Access to basic tours",
-        "Community support",
-        "Mobile app access",
-        "Basic travel insurance"
+        "Create up to 5 tour listings",
+        "Basic profile customization",
+        "Customer messaging system",
+        "Payment processing",
+        "Mobile app access"
       ],
-      popular: false
+      popular: false,
+      hoverColor: "from-blue-400 to-blue-600"
     },
     {
-      name: "Adventurer",
-      price: "$59",
-      period: "/month",
-      features: [
-        "All Explorer features",
-        "Premium tours access",
-        "Priority booking",
-        "24/7 customer support",
-        "Comprehensive travel insurance",
-        "Photography workshops"
-      ],
-      popular: true
-    },
-    {
-      name: "Professional",
+      name: "Professional Guide",
       price: "$99",
       period: "/month",
       features: [
-        "All Adventurer features",
-        "Unlimited tour access",
-        "Personal travel consultant",
-        "Luxury accommodations",
-        "Private group tours",
-        "Custom itinerary planning"
+        "Unlimited tour listings",
+        "Advanced profile features",
+        "Priority customer support",
+        "Analytics dashboard",
+        "Marketing tools",
+        "Commission-free bookings"
       ],
-      popular: false
+      popular: true,
+      hoverColor: "from-green-400 to-green-600"
+    },
+    {
+      name: "Elite Guide",
+      price: "$199",
+      period: "/month",
+      features: [
+        "All Professional features",
+        "Featured listing placement",
+        "Personal account manager",
+        "Custom branding options",
+        "API access",
+        "White-label solutions"
+      ],
+      popular: false,
+      hoverColor: "from-purple-400 to-purple-600"
     }
   ];
 
@@ -62,10 +66,10 @@ const SubscriptionPlans = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            Choose Your Adventure Plan
+            Professional Guide Subscriptions
           </h2>
           <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-            Select the perfect plan for your travel needs and start exploring today
+            Choose the perfect plan to showcase your expertise and grow your tour guide business
           </p>
         </div>
 
@@ -73,10 +77,12 @@ const SubscriptionPlans = () => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer ${
+              className={`relative rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer ${
                 plan.popular ? 'ring-2 ring-green-500 scale-105' : ''
               } ${
-                hoveredPlan === index ? 'shadow-2xl -translate-y-2' : ''
+                hoveredPlan === index 
+                  ? `shadow-2xl -translate-y-2 bg-gradient-to-br ${plan.hoverColor}` 
+                  : isDark ? 'bg-gray-800' : 'bg-white'
               }`}
               onMouseEnter={() => setHoveredPlan(index)}
               onMouseLeave={() => setHoveredPlan(null)}
@@ -91,15 +97,21 @@ const SubscriptionPlans = () => {
               )}
               
               <div className="p-8">
-                <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <h3 className={`text-2xl font-bold mb-4 ${
+                  hoveredPlan === index ? 'text-white' : isDark ? 'text-white' : 'text-gray-900'
+                }`}>
                   {plan.name}
                 </h3>
                 
                 <div className="mb-6">
-                  <span className={`text-4xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-4xl font-bold ${
+                    hoveredPlan === index ? 'text-white' : isDark ? 'text-white' : 'text-gray-900'
+                  }`}>
                     {plan.price}
                   </span>
-                  <span className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`${
+                    hoveredPlan === index ? 'text-gray-100' : isDark ? 'text-gray-400' : 'text-gray-500'
+                  }`}>
                     {plan.period}
                   </span>
                 </div>
@@ -107,8 +119,12 @@ const SubscriptionPlans = () => {
                 <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
-                      <Check className="text-green-500 mr-3" size={20} />
-                      <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <Check className={`mr-3 ${
+                        hoveredPlan === index ? 'text-white' : 'text-green-500'
+                      }`} size={20} />
+                      <span className={`${
+                        hoveredPlan === index ? 'text-white' : isDark ? 'text-gray-300' : 'text-gray-600'
+                      }`}>
                         {feature}
                       </span>
                     </li>
