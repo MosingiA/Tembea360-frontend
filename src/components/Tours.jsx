@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import { useLocation } from 'react-router-dom';
 import { Search, Filter, SlidersHorizontal } from 'lucide-react';
 import DestinationCard from './DestinationCard';
 
 const Tours = () => {
   const { isDark } = useTheme();
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [priceRange, setPriceRange] = useState('All');
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const category = params.get('category');
+    if (category) {
+      const categoryMap = {
+        'wildlife': 'Safari',
+        'adventure': 'Adventure',
+        'cultural': 'Cultural'
+      };
+      setSelectedCategory(categoryMap[category] || 'All');
+    }
+  }, [location.search]);
 
   const tours = [
     {

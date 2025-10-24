@@ -15,7 +15,8 @@ const FeaturedProfessionals = () => {
       rating: 4.9,
       reviews: 127,
       image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
-      price: "$50/day"
+      price: "$50/day",
+      category: "adventure"
     },
     {
       id: 2,
@@ -25,7 +26,8 @@ const FeaturedProfessionals = () => {
       rating: 4.8,
       reviews: 89,
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-      price: "$75/day"
+      price: "$75/day",
+      category: "wildlife"
     },
     {
       id: 3,
@@ -35,7 +37,8 @@ const FeaturedProfessionals = () => {
       rating: 4.9,
       reviews: 156,
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-      price: "$45/day"
+      price: "$45/day",
+      category: "cultural"
     }
   ];
 
@@ -53,9 +56,10 @@ const FeaturedProfessionals = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {professionals.map((professional) => (
-            <div
+            <Link
               key={professional.id}
-              className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}
+              to={`/tours?category=${professional.category}`}
+              className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group block`}
             >
               <div className="relative">
                 <img
@@ -91,15 +95,19 @@ const FeaturedProfessionals = () => {
                     </span>
                   </div>
                   
-                  <Link
-                    to="/booking"
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.location.href = '/booking';
+                    }}
                     className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
                   >
                     Book Now
-                  </Link>
+                  </button>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
