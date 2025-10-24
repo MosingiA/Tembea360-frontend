@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { Users, Award, Globe, Heart } from 'lucide-react';
-import aboutHeroBg from '../assets/images/about-hero-bg.jpg';
+
 
 const About = () => {
   const { isDark } = useTheme();
@@ -38,11 +38,9 @@ const About = () => {
     <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       {/* Hero Section with background image */}
       <section 
-      className="py-32 bg-cover bg-center bg-no-repeat relative"
-      style={{
-        backgroundImage: isDark
-          ? `linear-gradient(to bottom, rgba(17, 24, 39, 0.2), rgba(17, 24, 39, 0.6)), url(${aboutHeroBg})`
-          : `linear-gradient(to bottom, rgba(239, 246, 255, 0.2), rgba(224, 231, 255, 0.6)), url(${aboutHeroBg})`,
+className="py-32 relative"
+style={{
+        backgroundColor: isDark ? '#1f2937' : '#f3f4f6'
       }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
