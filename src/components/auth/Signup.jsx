@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, Users, Briefcase } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -9,7 +9,8 @@ const Signup = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    userType: 'traveler'
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,10 +33,21 @@ const Signup = () => {
     
     // Simulate API call
     setTimeout(() => {
-      const userData = { id: 1, name: formData.name, email: formData.email };
+      const userData = { 
+        id: 1, 
+        name: formData.name, 
+        email: formData.email, 
+        userType: formData.userType 
+      };
       const token = 'mock-jwt-token';
       login(userData, token);
-      navigate('/');
+      
+      // Navigate based on user type
+      if (formData.userType === 'professional') {
+        navigate('/professional-setup');
+      } else {
+        navigate('/');
+      }
       setLoading(false);
     }, 1000);
   };
@@ -49,6 +61,54 @@ const Signup = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* User Type Selection */}
+          <div>
+            <label className={`block text-sm font-medium mb-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              I want to join as:
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <label className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                formData.userType === 'traveler' 
+                  ? 'border-green-500 bg-green-50' 
+                  : isDark ? 'border-gray-600 hover:border-gray-500' : 'border-gray-200 hover:border-gray-300'
+              }`}>
+                <input
+                  type="radio"
+                  name="userType"
+                  value="traveler"
+                  checked={formData.userType === 'traveler'}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                <Users className="mr-3 text-green-500" size={20} />
+                <div>
+                  <div className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Traveler</div>
+                  <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Book tours</div>
+                </div>
+              </label>
+              
+              <label className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                formData.userType === 'professional' 
+                  ? 'border-green-500 bg-green-50' 
+                  : isDark ? 'border-gray-600 hover:border-gray-500' : 'border-gray-200 hover:border-gray-300'
+              }`}>
+                <input
+                  type="radio"
+                  name="userType"
+                  value="professional"
+                  checked={formData.userType === 'professional'}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                <Briefcase className="mr-3 text-green-500" size={20} />
+                <div>
+                  <div className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Guide</div>
+                  <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Offer tours</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
           <div>
             <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
               Full Name

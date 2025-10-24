@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, LogOut } from 'lucide-react';
+import { Menu, X, User, LogOut, Bell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout, professionalUpdates, markUpdateAsRead } = useAuth();
+  const [showNotifications, setShowNotifications] = useState(false);
+  
+  const unreadUpdates = professionalUpdates.filter(update => !update.read);
   const { isDark } = useTheme();
   const navigate = useNavigate();
 
@@ -44,6 +47,56 @@ const Navbar = () => {
             
             {user ? (
               <div className="flex items-center space-x-4">
+                {user.userType === 'traveler' && (
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowNotifications(!showNotifications)}
+                      className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                      <Bell size={20} className={isDark ? 'text-gray-300' : 'text-gray-700'} />
+                      {unreadUpdates.length > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                          {unreadUpdates.length}
+                        </span>
+                      )}
+                    </button>
+                    
+                    {showNotifications && (
+                      <div className={`absolute right-0 mt-2 w-80 ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg border ${isDark ? 'border-gray-700' : 'border-gray-200'} z-50`}>
+                        <div className="p-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}">
+                          <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Professional Updates</h3>
+                        </div>
+                        <div className="max-h-64 overflow-y-auto">
+                          {professionalUpdates.length > 0 ? (
+                            professionalUpdates.slice(0, 5).map(update => (
+                              <div
+                                key={update.id}
+                                className={`p-3 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'} hover:bg-gray-50 cursor-pointer ${
+                                  !update.read ? 'bg-blue-50' : ''
+                                }`}
+                                onClick={() => markUpdateAsRead(update.id)}
+                              >
+                                <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                                  {update.message}
+                                </p>
+                                <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'} mt-1`}>
+                                  {new Date(update.timestamp).toLocaleTimeString()}
+                                </p>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="p-4 text-center">
+                              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                                No updates yet
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
                 <Link to="/profile" className="flex items-center space-x-2 hover:text-blue-500 transition-colors">
                   <User size={20} />
                   <span className={isDark ? 'text-gray-300' : 'text-gray-700'}>Profile</span>
