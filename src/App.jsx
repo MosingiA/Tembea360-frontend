@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
-import Navbar from './Components/Navbar';
+import Navbar from './components/Navbar';
 import Homepage from './Components/Homepage';
 import Login from './Components/auth/Login';
 import Signup from './Components/auth/Signup';
