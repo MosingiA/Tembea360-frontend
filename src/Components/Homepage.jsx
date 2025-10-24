@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
-import HeroSection from '../Components/HeroSection';
+import HeroSection from '../components/HeroSection';
 import SubscriptionPlans from '../components/SubscriptionPlans';
 import ServicesSection from '../components/ServicesSection';
 import FeaturedProfessionals from '../components/FeaturedProfessionals';
