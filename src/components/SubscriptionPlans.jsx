@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 const SubscriptionPlans = () => {
   const { isDark } = useTheme();
+  const navigate = useNavigate();
+  const [hoveredPlan, setHoveredPlan] = useState(null);
+
+  const handlePlanSelect = (plan) => {
+    // Store selected plan in localStorage for payment page
+    localStorage.setItem('selectedPlan', JSON.stringify(plan));
+    navigate('/payment');
+  };
 
   const plans = [
     {
@@ -64,7 +73,14 @@ const SubscriptionPlans = () => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ${plan.popular ? 'ring-2 ring-green-500 scale-105' : ''}`}
+              className={`relative ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer ${
+                plan.popular ? 'ring-2 ring-green-500 scale-105' : ''
+              } ${
+                hoveredPlan === index ? 'shadow-2xl -translate-y-2' : ''
+              }`}
+              onMouseEnter={() => setHoveredPlan(index)}
+              onMouseLeave={() => setHoveredPlan(null)}
+              onClick={() => handlePlanSelect(plan)}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -100,12 +116,18 @@ const SubscriptionPlans = () => {
                 </ul>
                 
                 <button
-                  className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 ${
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePlanSelect(plan);
+                  }}
+                  className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
                     plan.popular
-                      ? 'bg-gradient-to-r from-green-400 to-green-700 text-white hover:shadow-lg'
+                      ? 'bg-gradient-to-r from-green-400 to-green-700 text-white hover:shadow-lg hover:from-green-500 hover:to-green-800'
                       : isDark
-                      ? 'bg-gray-700 text-white hover:bg-gray-600'
-                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                      ? 'bg-gray-700 text-white hover:bg-gray-600 hover:shadow-md'
+                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200 hover:shadow-md'
+                  } ${
+                    hoveredPlan === index ? 'scale-105' : ''
                   }`}
                 >
                   Get Started

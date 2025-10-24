@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { CreditCard, Lock, Calendar, User, Shield, CheckCircle } from 'lucide-react';
 
@@ -20,9 +20,26 @@ const Payment = () => {
   });
   const [processing, setProcessing] = useState(false);
   const [paymentComplete, setPaymentComplete] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
-  // Sample booking data
-  const bookingDetails = {
+  useEffect(() => {
+    // Get selected plan from localStorage
+    const planData = localStorage.getItem('selectedPlan');
+    if (planData) {
+      setSelectedPlan(JSON.parse(planData));
+    }
+  }, []);
+
+  // Dynamic booking data based on selected plan or default tour booking
+  const bookingDetails = selectedPlan ? {
+    tourName: `${selectedPlan.name} Subscription Plan`,
+    date: "Starts immediately",
+    guests: 1,
+    duration: "Monthly subscription",
+    subtotal: parseFloat(selectedPlan.price.replace('$', '')),
+    tax: parseFloat(selectedPlan.price.replace('$', '')) * 0.1,
+    total: parseFloat(selectedPlan.price.replace('$', '')) * 1.1
+  } : {
     tourName: "Maasai Mara Safari Adventure",
     date: "March 15, 2024",
     guests: 2,
@@ -146,9 +163,30 @@ const Payment = () => {
                 <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   {bookingDetails.date} • {bookingDetails.duration}
                 </p>
-                <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                  {bookingDetails.guests} guests
-                </p>
+                {!selectedPlan && (
+                  <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    {bookingDetails.guests} guests
+                  </p>
+                )}
+                {selectedPlan && (
+                  <div className={`mt-3 p-3 ${isDark ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg`}>
+                    <p className={`text-sm font-medium ${isDark ? 'text-green-400' : 'text-green-600'} mb-2`}>
+                      Plan Features:
+                    </p>
+                    <ul className="text-xs space-y-1">
+                      {selectedPlan.features.slice(0, 3).map((feature, index) => (
+                        <li key={index} className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                          • {feature}
+                        </li>
+                      ))}
+                      {selectedPlan.features.length > 3 && (
+                        <li className={`${isDark ? 'text-gray-400' : 'text-gray-500'} italic`}>
+                          +{selectedPlan.features.length - 3} more features
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                )}
               </div>
               
               <div className={`border-t ${isDark ? 'border-gray-700' : 'border-gray-200'} pt-4 space-y-2`}>
