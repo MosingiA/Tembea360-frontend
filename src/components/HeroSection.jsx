@@ -39,7 +39,7 @@ const HeroSection = () => {
                 to="/signup"
                 className="px-8 py-4 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
               >
-                Start Your Journey Today Today
+Start Exploring Today
               </Link>
 
               {/* Secondary Button — now matches the main style */}
