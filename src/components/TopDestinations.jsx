@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Star, Loader } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { getKenyaTouringSites, getInternationalDestinations } from '../services/tourismAPI';
 
 const TopDestinations = () => {
   const { isDark } = useTheme();
   const [kenyaDestinations, setKenyaDestinations] = useState([]);
+  const [internationalDestinations, setInternationalDestinations] = useState([]);
+  const [currentInternationalIndex, setCurrentInternationalIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [countryInfo, setCountryInfo] = useState(null);
 
   // Comprehensive Kenya destinations data
   const kenyaDestinationsData = [
@@ -94,74 +96,42 @@ const TopDestinations = () => {
     }
   ];
 
-  // Fetch Kenya country information from REST Countries API
   useEffect(() => {
-    const fetchKenyaInfo = async () => {
+    const fetchDestinations = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://restcountries.com/v3.1/name/kenya');
-        const data = await response.json();
+        const [kenyaSites, internationalSites] = await Promise.all([
+          getKenyaTouringSites(),
+          getInternationalDestinations()
+        ]);
         
-        if (data && data[0]) {
-          setCountryInfo({
-            name: data[0].name.common,
-            capital: data[0].capital[0],
-            population: data[0].population,
-            region: data[0].region,
-            subregion: data[0].subregion,
-            flag: data[0].flags.svg,
-            currencies: Object.values(data[0].currencies)[0],
-            languages: Object.values(data[0].languages)
-          });
-        }
-        
-        // Set destinations data
-        setKenyaDestinations(kenyaDestinationsData);
+        setKenyaDestinations(kenyaSites.slice(0, 8));
+        setInternationalDestinations(internationalSites);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch Kenya information');
-        setKenyaDestinations(kenyaDestinationsData); // Fallback to static data
+        setError('Failed to fetch destinations');
+        setKenyaDestinations(kenyaDestinationsData);
         setLoading(false);
       }
     };
 
-    fetchKenyaInfo();
+    fetchDestinations();
   }, []);
 
-  const internationalDestinations = [
-    {
-      id: 1,
-      name: "Serengeti",
-      location: "Tanzania",
-      rating: 4.9,
-      price: "From $599",
-      image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=400&h=300&fit=crop"
-    },
-    {
-      id: 2,
-      name: "Victoria Falls",
-      location: "Zambia/Zimbabwe",
-      rating: 4.8,
-      price: "From $399",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop"
-    },
-    {
-      id: 3,
-      name: "Zanzibar",
-      location: "Tanzania",
-      rating: 4.7,
-      price: "From $349",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop"
-    },
-    {
-      id: 4,
-      name: "Kruger Park",
-      location: "South Africa",
-      rating: 4.8,
-      price: "From $499",
-      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400&h=300&fit=crop"
+  useEffect(() => {
+    if (internationalDestinations.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentInternationalIndex(prev => 
+          (prev + 6) % internationalDestinations.length
+        );
+      }, 5000);
+      return () => clearInterval(interval);
     }
-  ];
+  }, [internationalDestinations]);
+
+  const getCurrentInternationalDestinations = () => {
+    return internationalDestinations.slice(currentInternationalIndex, currentInternationalIndex + 6);
+  };
 
   const DestinationCard = ({ destination }) => (
     <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}>
@@ -172,7 +142,7 @@ const TopDestinations = () => {
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-          <span className="text-sm font-semibold text-gray-900">{destination.price}</span>
+          <span className="text-sm font-semibold text-gray-900">${destination.price || 'From $299'}</span>
         </div>
         {destination.category && (
           <div className="absolute top-4 left-4 bg-green-500/90 backdrop-blur-sm rounded-full px-3 py-1">
@@ -219,32 +189,7 @@ const TopDestinations = () => {
   return (
     <section className={`py-20 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Kenya Country Info */}
-        {countryInfo && (
-          <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg p-6 mb-12`}>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <img src={countryInfo.flag} alt="Kenya Flag" className="w-12 h-8 mr-4 rounded" />
-                <div>
-                  <h3 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    {countryInfo.name}
-                  </h3>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                    Capital: {countryInfo.capital} | Population: {countryInfo.population.toLocaleString()}
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                  {countryInfo.region}, {countryInfo.subregion}
-                </p>
-                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                  Currency: {countryInfo.currencies.name}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
+
 
         {/* Loading State */}
         {loading && (
@@ -273,7 +218,7 @@ const TopDestinations = () => {
                 Top Destinations in Kenya
               </h2>
               <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-                Discover {kenyaDestinations.length} amazing destinations across Kenya
+                Discover 8 featured destinations from our collection of 40 Kenya sites
               </p>
             </div>
 
@@ -296,8 +241,8 @@ const TopDestinations = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {internationalDestinations.map((destination) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {getCurrentInternationalDestinations().map((destination) => (
               <DestinationCard key={destination.id} destination={destination} />
             ))}
           </div>
