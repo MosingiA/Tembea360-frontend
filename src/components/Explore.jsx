@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { MapPin, Star, Clock, Users } from 'lucide-react';
+import { getKenyaTouringSites, getInternationalDestinations } from '../services/tourismAPI';
 
 const Explore = () => {
   const { isDark } = useTheme();
+  const [destinations, setDestinations] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const destinations = [
+  useEffect(() => {
+    const loadDestinations = async () => {
+      try {
+        const kenyaSites = await getKenyaTouringSites();
+        setDestinations(kenyaSites);
+      } catch (error) {
+        console.error('Failed to load destinations:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadDestinations();
+  }, []);
+
+  const fallbackDestinations = [
     {
       id: 1,
       name: "Maasai Mara National Reserve",
@@ -17,28 +35,6 @@ const Explore = () => {
       price: "$299",
       image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=400&fit=crop",
       description: "Experience the Great Migration and witness incredible wildlife in their natural habitat."
-    },
-    {
-      id: 2,
-      name: "Mount Kenya National Park",
-      location: "Kenya",
-      rating: 4.8,
-      duration: "4-7 days",
-      groupSize: "4-8 people",
-      price: "$450",
-      image: "https://images.unsplash.com/photo-1605538883669-825200433431?w=600&h=400&fit=crop",
-      description: "Challenge yourself with Africa's second-highest peak and stunning alpine scenery."
-    },
-    {
-      id: 3,
-      name: "Lamu Old Town",
-      location: "Kenya",
-      rating: 4.7,
-      duration: "2-4 days",
-      groupSize: "1-10 people",
-      price: "$199",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop",
-      description: "Discover the rich Swahili culture and UNESCO World Heritage architecture."
     }
   ];
 
@@ -55,7 +51,7 @@ const Explore = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {destinations.map((destination) => (
+          {(destinations.length > 0 ? destinations : fallbackDestinations).map((destination) => (
             <div
               key={destination.id}
               className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}
@@ -67,7 +63,7 @@ const Explore = () => {
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                  <span className="text-sm font-semibold text-gray-900">{destination.price}</span>
+                  <span className="text-sm font-semibold text-gray-900">${destination.price || '299'}</span>
                 </div>
               </div>
               
@@ -78,7 +74,7 @@ const Explore = () => {
                 
                 <div className={`flex items-center mb-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                   <MapPin size={16} className="mr-1" />
-                  <span className="text-sm">{destination.location}</span>
+                  <span className="text-sm">{destination.location || 'Kenya'}</span>
                 </div>
                 
                 <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm mb-4`}>
@@ -95,12 +91,12 @@ const Explore = () => {
                   
                   <div className={`flex items-center text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                     <Clock size={14} className="mr-1" />
-                    <span>{destination.duration}</span>
+                    <span>{destination.duration || '3-5 days'}</span>
                   </div>
                   
                   <div className={`flex items-center text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                     <Users size={14} className="mr-1" />
-                    <span>{destination.groupSize}</span>
+                    <span>{destination.groupSize || '2-12 people'}</span>
                   </div>
                 </div>
                 

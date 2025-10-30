@@ -118,33 +118,15 @@ const Payment = () => {
     handleInputChange('expiryDate', formatted);
   };
 
-  const sendBookingConfirmationEmail = (bookingDetails) => {
-    const emailContent = {
-      to: bookingDetails.contactInfo.email,
-      subject: `Booking Confirmation - ${bookingDetails.tour.name}`,
-      body: `
-        Dear ${bookingDetails.contactInfo.firstName} ${bookingDetails.contactInfo.lastName},
-        
-        Thank you for booking with Tembea360! Your tour booking has been confirmed.
-        
-        BOOKING DETAILS:
-        - Tour: ${bookingDetails.tour.name}
-        - Date: ${bookingDetails.date}
-        - Guests: ${bookingDetails.guests}
-        - Total: $${bookingDetails.pricing.total.toFixed(2)}
-        - Reference: TM360-${Date.now().toString().slice(-6)}
-        
-        We will send you detailed itinerary and preparation information 48 hours before your tour.
-        
-        For any questions, please contact us at support@tembea360.com
-        
-        Best regards,
-        The Tembea360 Team
-      `
-    };
-    
-    console.log('Booking confirmation email sent:', emailContent);
-    return emailContent;
+  const sendBookingConfirmationEmail = async (bookingDetails) => {
+    try {
+      const { sendBookingConfirmation } = await import('../services/emailService');
+      const result = await sendBookingConfirmation(bookingDetails);
+      return result;
+    } catch (error) {
+      console.error('Email service error:', error);
+      return { success: false, error: error.message };
+    }
   };
 
   const handleSubmit = async (e) => {
