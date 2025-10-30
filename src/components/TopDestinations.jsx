@@ -112,7 +112,7 @@ const TopDestinations = () => {
         setCurrentInternationalIndex(prev => 
           (prev + 6) % internationalDestinations.length
         );
-      }, 5000);
+      }, 10000);
       return () => clearInterval(interval);
     }
   }, [internationalDestinations]);
@@ -123,7 +123,7 @@ const TopDestinations = () => {
         setCurrentKenyaIndex(prev => 
           (prev + 8) % kenyaDestinations.length
         );
-      }, 4000);
+      }, 10000);
       return () => clearInterval(interval);
     }
   }, [kenyaDestinations]);
