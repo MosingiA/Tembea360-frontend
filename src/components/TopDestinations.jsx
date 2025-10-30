@@ -183,6 +183,7 @@ const TopDestinations = () => {
         
         <Link
           to="/booking"
+          state={{ selectedDestination: destination }}
           className="w-full block text-center py-2.5 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 text-sm"
         >
           Book Now

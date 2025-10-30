@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLocation } from 'react-router-dom';
 import { Calendar, Users, MapPin, Clock, Star, CreditCard, Mail, CheckCircle } from 'lucide-react';
 
 const Booking = () => {
   const { isDark } = useTheme();
   const { user } = useAuth();
+  const location = useLocation();
   const [step, setStep] = useState(1);
+  
+  const selectedDestination = location.state?.selectedDestination;
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [bookingReference, setBookingReference] = useState('');
   const [bookingData, setBookingData] = useState({
@@ -23,8 +27,7 @@ const Booking = () => {
     paymentMethod: 'card'
   });
 
-  // Sample tour data (in real app, this would come from props or API)
-  const selectedTour = {
+  const selectedTour = selectedDestination || {
     id: 1,
     name: "Maasai Mara Safari Adventure",
     location: "Maasai Mara, Kenya",
@@ -285,7 +288,7 @@ const Booking = () => {
                 className="mr-3"
               />
               <CreditCard className="mr-2" size={20} />
-              <span className={isDark ? 'text-white' : 'text-gray-900'}>Credit/Debit Card</span>
+              <span className={isDark ? 'text-white' : 'text-gray-900'}>Credit/Debit Card (Stripe)</span>
             </label>
             <label className="flex items-center">
               <input
@@ -297,6 +300,17 @@ const Booking = () => {
                 className="mr-3"
               />
               <span className={isDark ? 'text-white' : 'text-gray-900'}>PayPal</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="mpesa"
+                checked={bookingData.paymentMethod === 'mpesa'}
+                onChange={(e) => handleInputChange('paymentMethod', e.target.value)}
+                className="mr-3"
+              />
+              <span className={isDark ? 'text-white' : 'text-gray-900'}>M-Pesa (Kenya)</span>
             </label>
           </div>
         </div>

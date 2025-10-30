@@ -129,20 +129,57 @@ const Payment = () => {
     }
   };
 
+  const processPaymentAPI = async (paymentMethod, paymentData) => {
+    try {
+      const { processPayment } = await import('../services/paymentService');
+      const result = await processPayment(paymentMethod, paymentData);
+      return result;
+    } catch (error) {
+      console.error('Payment processing error:', error);
+      return { success: false, error: error.message };
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
     
-    // Simulate payment processing
-    setTimeout(() => {
-      // Send confirmation email for tour bookings
-      if (pendingBooking) {
-        sendBookingConfirmationEmail(pendingBooking);
+    try {
+      let paymentResult;
+      
+      if (selectedPlan) {
+        // Process subscription payment
+        paymentResult = await processPaymentAPI(paymentMethod, {
+          amount: parseFloat(selectedPlan.price.replace('$', '')),
+          description: `${selectedPlan.name} Subscription`,
+          reference: `SUB-${Date.now()}`,
+          paymentMethodId: paymentData.cardNumber // This would be tokenized in real implementation
+        });
+      } else if (pendingBooking) {
+        // Process tour booking payment
+        paymentResult = await processPaymentAPI(paymentMethod, {
+          amount: pendingBooking.pricing.total,
+          description: `Tour: ${pendingBooking.tour.name}`,
+          reference: `TOUR-${Date.now()}`,
+          paymentMethodId: paymentData.cardNumber,
+          phoneNumber: pendingBooking.contactInfo.phone // For M-Pesa
+        });
+        
+        if (paymentResult.success) {
+          await sendBookingConfirmationEmail(pendingBooking);
+        }
       }
       
+      if (paymentResult.success) {
+        setPaymentComplete(true);
+      } else {
+        alert('Payment failed: ' + paymentResult.error);
+      }
+    } catch (error) {
+      alert('Payment processing error: ' + error.message);
+    } finally {
       setProcessing(false);
-      setPaymentComplete(true);
-    }, 3000);
+    }
   };
 
   if (paymentComplete) {
