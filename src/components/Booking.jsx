@@ -326,7 +326,7 @@ const Booking = () => {
 
   if (bookingConfirmed) {
     return (
-      <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'tour-bg'} flex items-center justify-center`}>
+      <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'bg-gradient-to-br from-pink-100 via-purple-100 to-cyan-100'} flex items-center justify-center`}>
         <div className={`max-w-md w-full mx-4 ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg p-8 text-center`}>
           <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="text-white" size={32} />
@@ -371,7 +371,7 @@ const Booking = () => {
   }
 
   return (
-    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'tour-bg'}`}>
+    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'bg-gradient-to-br from-pink-100 via-purple-100 to-cyan-100'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Tour Details Sidebar */}

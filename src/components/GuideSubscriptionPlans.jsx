@@ -62,7 +62,7 @@ const GuideSubscriptionPlans = () => {
   ];
 
   return (
-    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'adventure-bg'}`}>
+    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'bg-gradient-to-br from-cyan-100 via-pink-100 to-purple-100'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
           <h2 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
