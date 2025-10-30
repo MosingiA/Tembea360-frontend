@@ -27,7 +27,18 @@ const Booking = () => {
     paymentMethod: 'card'
   });
 
-  const selectedTour = selectedDestination || {
+  const selectedTour = selectedDestination ? {
+    id: selectedDestination.id,
+    name: selectedDestination.name,
+    location: selectedDestination.location,
+    rating: selectedDestination.rating,
+    duration: selectedDestination.duration || "3-5 days",
+    price: selectedDestination.price,
+    image: selectedDestination.image,
+    description: selectedDestination.description,
+    includes: ["Accommodation", "All meals", "Professional guide", "Transportation"],
+    highlights: ["Wildlife", "Nature", "Photography", "Adventure"]
+  } : {
     id: 1,
     name: "Maasai Mara Safari Adventure",
     location: "Maasai Mara, Kenya",
