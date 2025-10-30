@@ -9,6 +9,7 @@ const TopDestinations = () => {
   const [kenyaDestinations, setKenyaDestinations] = useState([]);
   const [internationalDestinations, setInternationalDestinations] = useState([]);
   const [currentInternationalIndex, setCurrentInternationalIndex] = useState(0);
+  const [currentKenyaIndex, setCurrentKenyaIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -100,7 +101,7 @@ const TopDestinations = () => {
   ];
 
   useEffect(() => {
-    setKenyaDestinations(allKenyaSites.slice(0, 8));
+    setKenyaDestinations(allKenyaSites);
     setInternationalDestinations(allInternationalSites);
     setLoading(false);
   }, []);
@@ -116,9 +117,25 @@ const TopDestinations = () => {
     }
   }, [internationalDestinations]);
 
+  useEffect(() => {
+    if (kenyaDestinations.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentKenyaIndex(prev => 
+          (prev + 8) % kenyaDestinations.length
+        );
+      }, 4000);
+      return () => clearInterval(interval);
+    }
+  }, [kenyaDestinations]);
+
   const getCurrentInternationalDestinations = () => {
     if (internationalDestinations.length === 0) return [];
     return internationalDestinations.slice(currentInternationalIndex, currentInternationalIndex + 6);
+  };
+
+  const getCurrentKenyaDestinations = () => {
+    if (kenyaDestinations.length === 0) return [];
+    return kenyaDestinations.slice(currentKenyaIndex, currentKenyaIndex + 8);
   };
 
   const DestinationCard = ({ destination }) => (
@@ -211,7 +228,7 @@ const TopDestinations = () => {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {kenyaDestinations.map((destination) => (
+              {getCurrentKenyaDestinations().map((destination) => (
                 <DestinationCard key={destination.id} destination={destination} />
               ))}
             </div>
