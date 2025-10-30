@@ -12,100 +12,96 @@ const TopDestinations = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Comprehensive Kenya destinations data
   const kenyaDestinationsData = [
-    {
-      id: 1,
-      name: "Maasai Mara National Reserve",
-      location: "Narok County, Kenya",
-      rating: 4.9,
-      price: "From $299",
-      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400&h=300&fit=crop",
-      description: "Famous for the Great Migration and Big Five wildlife",
-      category: "Wildlife"
-    },
-    {
-      id: 2,
-      name: "Mount Kenya National Park",
-      location: "Central Kenya",
-      rating: 4.8,
-      price: "From $450",
-      image: "https://images.unsplash.com/photo-1605538883669-825200433431?w=400&h=300&fit=crop",
-      description: "Africa's second highest mountain with diverse ecosystems",
-      category: "Adventure"
-    },
-    {
-      id: 3,
-      name: "Lamu Old Town",
-      location: "Lamu County, Kenya",
-      rating: 4.7,
-      price: "From $199",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
-      description: "UNESCO World Heritage Site with Swahili culture",
-      category: "Cultural"
-    },
-    {
-      id: 4,
-      name: "Diani Beach",
-      location: "Kwale County, Kenya",
-      rating: 4.6,
-      price: "From $249",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop",
-      description: "Pristine white sand beach with coral reefs",
-      category: "Beach"
-    },
-    {
-      id: 5,
-      name: "Amboseli National Park",
-      location: "Kajiado County, Kenya",
-      rating: 4.8,
-      price: "From $350",
-      image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=400&h=300&fit=crop",
-      description: "Spectacular views of Mount Kilimanjaro and elephants",
-      category: "Wildlife"
-    },
-    {
-      id: 6,
-      name: "Samburu National Reserve",
-      location: "Samburu County, Kenya",
-      rating: 4.7,
-      price: "From $320",
-      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400&h=300&fit=crop",
-      description: "Unique wildlife including Grevy's zebra and reticulated giraffe",
-      category: "Wildlife"
-    },
-    {
-      id: 7,
-      name: "Lake Nakuru National Park",
-      location: "Nakuru County, Kenya",
-      rating: 4.5,
-      price: "From $180",
-      image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=400&h=300&fit=crop",
-      description: "Famous for flamingos and rhino sanctuary",
-      category: "Wildlife"
-    },
-    {
-      id: 8,
-      name: "Tsavo National Parks",
-      location: "Eastern Kenya",
-      rating: 4.6,
-      price: "From $280",
-      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400&h=300&fit=crop",
-      description: "Kenya's largest national park with red elephants",
-      category: "Wildlife"
-    }
+    { id: 1, name: "Maasai Mara National Reserve", location: "Narok County", rating: 4.9, price: 599, image: "https://images.unsplash.com/photo-1516426122078-c23e76319801", description: "World-famous for the Great Migration", category: "Wildlife" },
+    { id: 2, name: "Amboseli National Park", location: "Kajiado County", rating: 4.8, price: 450, image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0", description: "Best views of Mount Kilimanjaro", category: "Wildlife" },
+    { id: 3, name: "Diani Beach", location: "Kwale County", rating: 4.7, price: 320, image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", description: "Pristine white sand beaches", category: "Beach" },
+    { id: 4, name: "Lake Nakuru National Park", location: "Nakuru County", rating: 4.6, price: 280, image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", description: "Famous for flamingos and rhinos", category: "Wildlife" },
+    { id: 5, name: "Tsavo National Parks", location: "Taita-Taveta County", rating: 4.5, price: 380, image: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44", description: "Kenya's largest national park with red elephants", category: "Wildlife" },
+    { id: 6, name: "Mount Kenya National Park", location: "Central Kenya", rating: 4.8, price: 520, image: "https://images.unsplash.com/photo-1605538883669-825200433431", description: "Africa's second highest peak", category: "Adventure" },
+    { id: 7, name: "Lamu Old Town", location: "Lamu County", rating: 4.6, price: 250, image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96", description: "UNESCO World Heritage Swahili culture", category: "Cultural" },
+    { id: 8, name: "Hell's Gate National Park", location: "Nakuru County", rating: 4.4, price: 180, image: "https://images.unsplash.com/photo-1571115764595-644a1f56a55c", description: "Unique geothermal features and rock climbing", category: "Adventure" }
+  ];
+
+  const allKenyaSites = [
+    { id: 1, name: "Maasai Mara National Reserve", location: "Narok County", rating: 4.9, price: 599, image: "https://images.unsplash.com/photo-1516426122078-c23e76319801", description: "World-famous for the Great Migration", category: "Wildlife" },
+    { id: 2, name: "Amboseli National Park", location: "Kajiado County", rating: 4.8, price: 450, image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0", description: "Best views of Mount Kilimanjaro", category: "Wildlife" },
+    { id: 3, name: "Diani Beach", location: "Kwale County", rating: 4.7, price: 320, image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", description: "Pristine white sand beaches", category: "Beach" },
+    { id: 4, name: "Lake Nakuru National Park", location: "Nakuru County", rating: 4.6, price: 280, image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", description: "Famous for flamingos and rhinos", category: "Wildlife" },
+    { id: 5, name: "Tsavo National Parks", location: "Taita-Taveta County", rating: 4.5, price: 380, image: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44", description: "Kenya's largest national park", category: "Wildlife" },
+    { id: 6, name: "Mount Kenya National Park", location: "Central Kenya", rating: 4.8, price: 520, image: "https://images.unsplash.com/photo-1605538883669-825200433431", description: "Africa's second highest peak", category: "Adventure" },
+    { id: 7, name: "Lamu Old Town", location: "Lamu County", rating: 4.6, price: 250, image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96", description: "UNESCO World Heritage site", category: "Cultural" },
+    { id: 8, name: "Hell's Gate National Park", location: "Nakuru County", rating: 4.4, price: 180, image: "https://images.unsplash.com/photo-1571115764595-644a1f56a55c", description: "Geothermal features", category: "Adventure" },
+    { id: 9, name: "Samburu National Reserve", location: "Samburu County", rating: 4.7, price: 420, image: "https://images.unsplash.com/photo-1564760290292-23341e4df6ec", description: "Unique wildlife", category: "Wildlife" },
+    { id: 10, name: "Mombasa Old Town", location: "Mombasa County", rating: 4.3, price: 200, image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96", description: "Historic coastal city", category: "Cultural" },
+    { id: 11, name: "Aberdare National Park", location: "Nyandarua County", rating: 4.5, price: 350, image: "https://images.unsplash.com/photo-1605538883669-825200433431", description: "Mountain forests", category: "Nature" },
+    { id: 12, name: "Watamu Marine Park", location: "Kilifi County", rating: 4.6, price: 280, image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", description: "Coral reefs", category: "Marine" },
+    { id: 13, name: "Meru National Park", location: "Meru County", rating: 4.4, price: 320, image: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44", description: "Elsa the lioness birthplace", category: "Wildlife" },
+    { id: 14, name: "Lake Naivasha", location: "Nakuru County", rating: 4.5, price: 220, image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", description: "Freshwater lake", category: "Nature" },
+    { id: 15, name: "Kakamega Forest", location: "Kakamega County", rating: 4.3, price: 180, image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e", description: "Tropical rainforest", category: "Nature" },
+    { id: 16, name: "Malindi Marine Park", location: "Kilifi County", rating: 4.4, price: 260, image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", description: "Coral gardens", category: "Marine" },
+    { id: 17, name: "Ol Pejeta Conservancy", location: "Laikipia County", rating: 4.8, price: 480, image: "https://images.unsplash.com/photo-1516426122078-c23e76319801", description: "Rhino sanctuary", category: "Wildlife" },
+    { id: 18, name: "Shimba Hills Reserve", location: "Kwale County", rating: 4.4, price: 300, image: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44", description: "Coastal forests", category: "Nature" },
+    { id: 19, name: "Chyulu Hills Park", location: "Makueni County", rating: 4.2, price: 250, image: "https://images.unsplash.com/photo-1605538883669-825200433431", description: "Green hills", category: "Nature" },
+    { id: 20, name: "Kisite-Mpunguti Marine", location: "Kwale County", rating: 4.5, price: 290, image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", description: "Dolphin watching", category: "Marine" },
+    { id: 21, name: "Marsabit National Park", location: "Marsabit County", rating: 4.2, price: 380, image: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44", description: "Desert oasis", category: "Wildlife" },
+    { id: 22, name: "Arabuko Sokoke Forest", location: "Kilifi County", rating: 4.1, price: 150, image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e", description: "Coastal forest", category: "Nature" },
+    { id: 23, name: "Ruma National Park", location: "Homa Bay County", rating: 4.0, price: 200, image: "https://images.unsplash.com/photo-1516426122078-c23e76319801", description: "Roan antelope sanctuary", category: "Wildlife" },
+    { id: 24, name: "Saiwa Swamp Park", location: "Trans-Nzoia County", rating: 4.0, price: 120, image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", description: "Sitatunga habitat", category: "Nature" },
+    { id: 25, name: "Kora National Park", location: "Tana River County", rating: 4.1, price: 280, image: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44", description: "Lion sanctuary", category: "Wildlife" },
+    { id: 26, name: "Ndere Island Park", location: "Siaya County", rating: 3.9, price: 180, image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", description: "Lake Victoria island", category: "Nature" },
+    { id: 27, name: "Central Island Park", location: "Turkana County", rating: 4.3, price: 450, image: "https://images.unsplash.com/photo-1605538883669-825200433431", description: "Volcanic island", category: "Adventure" },
+    { id: 28, name: "South Island Park", location: "Turkana County", rating: 4.2, price: 420, image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", description: "Crocodile breeding", category: "Wildlife" },
+    { id: 29, name: "Nairobi National Park", location: "Nairobi County", rating: 4.4, price: 150, image: "https://images.unsplash.com/photo-1516426122078-c23e76319801", description: "Urban wildlife park", category: "Wildlife" },
+    { id: 30, name: "Karura Forest", location: "Nairobi County", rating: 4.2, price: 50, image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e", description: "Urban forest", category: "Nature" },
+    { id: 31, name: "Menengai Crater", location: "Nakuru County", rating: 4.1, price: 100, image: "https://images.unsplash.com/photo-1605538883669-825200433431", description: "Volcanic crater", category: "Adventure" },
+    { id: 32, name: "Fourteen Falls", location: "Machakos County", rating: 4.0, price: 80, image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", description: "Scenic waterfalls", category: "Nature" },
+    { id: 33, name: "Oloololo Escarpment", location: "Narok County", rating: 4.6, price: 200, image: "https://images.unsplash.com/photo-1516426122078-c23e76319801", description: "Dramatic cliffs", category: "Adventure" },
+    { id: 34, name: "Gedi Ruins", location: "Kilifi County", rating: 4.2, price: 120, image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96", description: "Ancient Swahili ruins", category: "Cultural" },
+    { id: 35, name: "Takwa Ruins", location: "Lamu County", rating: 4.0, price: 150, image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96", description: "15th century settlement", category: "Cultural" },
+    { id: 36, name: "Jumba la Mtwana", location: "Kilifi County", rating: 4.1, price: 100, image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96", description: "Medieval ruins", category: "Cultural" },
+    { id: 37, name: "Mida Creek", location: "Kilifi County", rating: 4.3, price: 80, image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", description: "Mangrove boardwalk", category: "Nature" },
+    { id: 38, name: "Haller Park", location: "Mombasa County", rating: 4.0, price: 60, image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e", description: "Nature park", category: "Nature" },
+    { id: 39, name: "Nguuni Nature Sanctuary", location: "Mombasa County", rating: 4.1, price: 100, image: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44", description: "Giraffes and ostriches", category: "Wildlife" },
+    { id: 40, name: "Wasini Island", location: "Kwale County", rating: 4.4, price: 180, image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", description: "Coral gardens", category: "Marine" }
+  ];
+
+  const allInternationalSites = [
+    { id: 1, name: "Paris, France", location: "France", rating: 4.9, price: 1200, image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52", description: "City of Light" },
+    { id: 2, name: "Tokyo, Japan", location: "Japan", rating: 4.8, price: 1500, image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf", description: "Modern metropolis" },
+    { id: 3, name: "New York, USA", location: "USA", rating: 4.7, price: 1300, image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9", description: "City that never sleeps" },
+    { id: 4, name: "London, UK", location: "UK", rating: 4.8, price: 1100, image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad", description: "Historic charm" },
+    { id: 5, name: "Rome, Italy", location: "Italy", rating: 4.7, price: 950, image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5", description: "Eternal city" },
+    { id: 6, name: "Barcelona, Spain", location: "Spain", rating: 4.6, price: 850, image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4", description: "Gaudi's masterpieces" },
+    { id: 7, name: "Dubai, UAE", location: "UAE", rating: 4.5, price: 1000, image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c", description: "Luxury destination" },
+    { id: 8, name: "Bangkok, Thailand", location: "Thailand", rating: 4.4, price: 700, image: "https://images.unsplash.com/photo-1563492065-1a83e8c0e8d6", description: "Temples and culture" },
+    { id: 9, name: "Istanbul, Turkey", location: "Turkey", rating: 4.5, price: 650, image: "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b", description: "Bridge of cultures" },
+    { id: 10, name: "Sydney, Australia", location: "Australia", rating: 4.6, price: 1400, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4", description: "Harbor city" },
+    { id: 11, name: "Amsterdam, Netherlands", location: "Netherlands", rating: 4.5, price: 900, image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017", description: "Canals and culture" },
+    { id: 12, name: "Prague, Czech Republic", location: "Czech Republic", rating: 4.4, price: 600, image: "https://images.unsplash.com/photo-1541849546-216549ae216d", description: "Medieval architecture" },
+    { id: 13, name: "Vienna, Austria", location: "Austria", rating: 4.6, price: 800, image: "https://images.unsplash.com/photo-1516550893923-42d407bd4ac2", description: "Imperial palaces" },
+    { id: 14, name: "Santorini, Greece", location: "Greece", rating: 4.7, price: 750, image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff", description: "White buildings" },
+    { id: 15, name: "Bali, Indonesia", location: "Indonesia", rating: 4.5, price: 650, image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1", description: "Tropical paradise" },
+    { id: 16, name: "Marrakech, Morocco", location: "Morocco", rating: 4.3, price: 550, image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e", description: "Red city" },
+    { id: 17, name: "Cape Town, South Africa", location: "South Africa", rating: 4.6, price: 700, image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99", description: "Table Mountain" },
+    { id: 18, name: "Reykjavik, Iceland", location: "Iceland", rating: 4.4, price: 1200, image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e", description: "Northern lights" },
+    { id: 19, name: "Kyoto, Japan", location: "Japan", rating: 4.8, price: 1100, image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e", description: "Traditional temples" },
+    { id: 20, name: "Machu Picchu, Peru", location: "Peru", rating: 4.9, price: 800, image: "https://images.unsplash.com/photo-1526392060635-9d6019884377", description: "Ancient citadel" },
+    { id: 21, name: "Rio de Janeiro, Brazil", location: "Brazil", rating: 4.5, price: 750, image: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325", description: "Christ the Redeemer" },
+    { id: 22, name: "Cairo, Egypt", location: "Egypt", rating: 4.3, price: 600, image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e", description: "Pyramids" },
+    { id: 23, name: "Mumbai, India", location: "India", rating: 4.2, price: 500, image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f", description: "Bollywood city" },
+    { id: 24, name: "Singapore", location: "Singapore", rating: 4.6, price: 1000, image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd", description: "Garden city" },
+    { id: 25, name: "Lisbon, Portugal", location: "Portugal", rating: 4.4, price: 650, image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b", description: "Colorful tiles" },
+    { id: 26, name: "Stockholm, Sweden", location: "Sweden", rating: 4.5, price: 950, image: "https://images.unsplash.com/photo-1509356843151-3e7d96241e11", description: "Archipelago city" },
+    { id: 27, name: "Buenos Aires, Argentina", location: "Argentina", rating: 4.3, price: 700, image: "https://images.unsplash.com/photo-1589909202802-8f4aadce1849", description: "Tango capital" },
+    { id: 28, name: "Seoul, South Korea", location: "South Korea", rating: 4.4, price: 900, image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf", description: "K-pop culture" },
+    { id: 29, name: "Vancouver, Canada", location: "Canada", rating: 4.5, price: 1100, image: "https://images.unsplash.com/photo-1549890762-0a3f8933bc76", description: "Mountains and ocean" },
+    { id: 30, name: "Zurich, Switzerland", location: "Switzerland", rating: 4.6, price: 1300, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4", description: "Alpine lakes" }
   ];
 
   useEffect(() => {
-    setKenyaDestinations(kenyaDestinationsData);
-    setInternationalDestinations([
-      { id: 1, name: "Paris, France", location: "France", rating: 4.9, price: 1200, image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52" },
-      { id: 2, name: "Tokyo, Japan", location: "Japan", rating: 4.8, price: 1500, image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf" },
-      { id: 3, name: "New York, USA", location: "USA", rating: 4.7, price: 1300, image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9" },
-      { id: 4, name: "London, UK", location: "UK", rating: 4.8, price: 1100, image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad" },
-      { id: 5, name: "Rome, Italy", location: "Italy", rating: 4.7, price: 950, image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5" },
-      { id: 6, name: "Barcelona, Spain", location: "Spain", rating: 4.6, price: 850, image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4" }
-    ]);
+    setKenyaDestinations(allKenyaSites.slice(0, 8));
+    setInternationalDestinations(allInternationalSites);
     setLoading(false);
   }, []);
 
@@ -122,7 +118,7 @@ const TopDestinations = () => {
 
   const getCurrentInternationalDestinations = () => {
     if (internationalDestinations.length === 0) return [];
-    return internationalDestinations.slice(0, 6);
+    return internationalDestinations.slice(currentInternationalIndex, currentInternationalIndex + 6);
   };
 
   const DestinationCard = ({ destination }) => (
