@@ -123,7 +123,8 @@ const Booking = () => {
       };
       
       localStorage.setItem('pendingBooking', JSON.stringify(bookingDetails));
-      window.location.href = '/payment';
+      // Navigate to payment with selected payment method
+      window.location.href = `/payment?method=${bookingData.paymentMethod}`;
     }
   };
 

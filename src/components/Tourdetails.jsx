@@ -374,6 +374,16 @@ const Tourdetails = () => {
 
               <Link
                 to="/booking"
+                state={{ selectedDestination: {
+                  id: tour.id,
+                  name: tour.name,
+                  location: tour.location,
+                  rating: tour.rating,
+                  price: tour.price,
+                  image: tour.images[0],
+                  description: tour.description,
+                  duration: tour.duration
+                }}}
                 className="w-full block text-center py-4 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
               >
                 Book Now

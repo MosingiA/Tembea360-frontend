@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { CreditCard, Lock, Calendar, User, Shield, CheckCircle } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { CreditCard, Lock, Calendar, User, Shield, CheckCircle, Smartphone } from 'lucide-react';
 
 const Payment = () => {
   const { isDark } = useTheme();
-  const [paymentMethod, setPaymentMethod] = useState('card');
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const methodFromUrl = urlParams.get('method') || 'card';
+  
+  const [paymentMethod, setPaymentMethod] = useState(methodFromUrl);
   const [paymentData, setPaymentData] = useState({
     cardNumber: '',
     expiryDate: '',
@@ -16,7 +21,8 @@ const Payment = () => {
       state: '',
       zipCode: '',
       country: ''
-    }
+    },
+    mpesaPhone: ''
   });
   const [processing, setProcessing] = useState(false);
   const [paymentComplete, setPaymentComplete] = useState(false);
@@ -153,29 +159,41 @@ const Payment = () => {
           amount: parseFloat(selectedPlan.price.replace('$', '')),
           description: `${selectedPlan.name} Subscription`,
           reference: `SUB-${Date.now()}`,
-          paymentMethodId: paymentData.cardNumber // This would be tokenized in real implementation
+          paymentMethodId: paymentMethod === 'card' ? paymentData.cardNumber : null,
+          phoneNumber: paymentMethod === 'mpesa' ? paymentData.mpesaPhone : null
         });
       } else if (pendingBooking) {
         // Process tour booking payment
-        paymentResult = await processPaymentAPI(paymentMethod, {
+        const paymentDetails = {
           amount: pendingBooking.pricing.total,
           description: `Tour: ${pendingBooking.tour.name}`,
           reference: `TOUR-${Date.now()}`,
-          paymentMethodId: paymentData.cardNumber,
-          phoneNumber: pendingBooking.contactInfo.phone // For M-Pesa
-        });
+          paymentMethodId: paymentMethod === 'card' ? paymentData.cardNumber : null,
+          phoneNumber: paymentMethod === 'mpesa' ? paymentData.mpesaPhone : pendingBooking.contactInfo.phone
+        };
+        
+        paymentResult = await processPaymentAPI(paymentMethod, paymentDetails);
         
         if (paymentResult.success) {
-          await sendBookingConfirmationEmail(pendingBooking);
+          // Send booking confirmation email
+          const emailResult = await sendBookingConfirmationEmail({
+            ...pendingBooking,
+            paymentReference: paymentResult.reference || paymentDetails.reference
+          });
+          
+          if (!emailResult.success) {
+            console.warn('Email sending failed:', emailResult.error);
+          }
         }
       }
       
-      if (paymentResult.success) {
+      if (paymentResult && paymentResult.success) {
         setPaymentComplete(true);
       } else {
-        alert('Payment failed: ' + paymentResult.error);
+        alert('Payment failed: ' + (paymentResult?.error || 'Unknown error'));
       }
     } catch (error) {
+      console.error('Payment processing error:', error);
       alert('Payment processing error: ' + error.message);
     } finally {
       setProcessing(false);
@@ -198,9 +216,23 @@ const Payment = () => {
             {selectedPlan 
               ? 'Your subscription has been activated! You can now start creating tour listings and managing your guide profile.' 
               : pendingBooking
-              ? `Your tour booking has been confirmed! A confirmation email has been sent to ${pendingBooking.contactInfo.email} with all the details.`
+              ? `Your tour booking has been confirmed! A detailed confirmation email with your itinerary, preparation instructions, and booking reference has been sent to ${pendingBooking.contactInfo.email}.`
               : 'Your booking has been confirmed. You will receive a confirmation email shortly.'}
           </p>
+          
+          {pendingBooking && (
+            <div className={`${isDark ? 'bg-blue-900/20' : 'bg-blue-50'} border border-blue-200 rounded-lg p-4 mb-6`}>
+              <div className="flex items-center justify-center mb-2">
+                <CheckCircle className="text-green-500 mr-2" size={20} />
+                <span className={`font-medium ${isDark ? 'text-blue-300' : 'text-blue-800'}`}>
+                  Email Confirmation Sent!
+                </span>
+              </div>
+              <p className={`text-sm text-center ${isDark ? 'text-blue-300' : 'text-blue-800'}`}>
+                Check your email for complete tour details and what to bring
+              </p>
+            </div>
+          )}
           
           <div className={`${isDark ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4 mb-6`}>
             <h3 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -325,7 +357,7 @@ const Payment = () => {
                 <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   Payment Method
                 </h3>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                   <label className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
                     paymentMethod === 'card' 
                       ? 'border-blue-500 bg-blue-50' 
@@ -340,7 +372,7 @@ const Payment = () => {
                       className="sr-only"
                     />
                     <CreditCard className="mr-3" size={24} />
-                    <span className={isDark ? 'text-white' : 'text-gray-900'}>Credit/Debit Card</span>
+                    <span className={isDark ? 'text-white' : 'text-gray-900'}>Card</span>
                   </label>
                   
                   <label className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
@@ -360,6 +392,23 @@ const Payment = () => {
                       <span className="text-white text-xs font-bold">P</span>
                     </div>
                     <span className={isDark ? 'text-white' : 'text-gray-900'}>PayPal</span>
+                  </label>
+                  
+                  <label className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                    paymentMethod === 'mpesa' 
+                      ? 'border-green-500 bg-green-50' 
+                      : isDark ? 'border-gray-600 hover:border-gray-500' : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="mpesa"
+                      checked={paymentMethod === 'mpesa'}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="sr-only"
+                    />
+                    <Smartphone className="mr-3 text-green-600" size={24} />
+                    <span className={isDark ? 'text-white' : 'text-gray-900'}>M-Pesa</span>
                   </label>
                 </div>
               </div>
@@ -535,7 +584,7 @@ const Payment = () => {
 
               {paymentMethod === 'paypal' && (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white text-2xl font-bold">P</span>
                   </div>
                   <h3 className={`text-xl font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -545,19 +594,72 @@ const Payment = () => {
                     You will be redirected to PayPal to complete your payment securely.
                   </p>
                   <button
-                    onClick={() => {
-                      setProcessing(true);
-                      setTimeout(() => {
-                        setProcessing(false);
-                        setPaymentComplete(true);
-                      }, 2000);
-                    }}
+                    onClick={handleSubmit}
                     disabled={processing}
-                    className="px-8 py-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50"
+                    className="px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
                   >
-                    {processing ? 'Redirecting...' : 'Continue with PayPal'}
+                    {processing ? 'Redirecting...' : `Pay $${bookingDetails.total} with PayPal`}
                   </button>
                 </div>
+              )}
+
+              {paymentMethod === 'mpesa' && (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      M-Pesa Payment
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          M-Pesa Phone Number
+                        </label>
+                        <div className="relative">
+                          <Smartphone className="absolute left-3 top-3 text-gray-400" size={20} />
+                          <input
+                            type="tel"
+                            value={paymentData.mpesaPhone}
+                            onChange={(e) => handleInputChange('mpesaPhone', e.target.value)}
+                            placeholder="254712345678"
+                            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                            required
+                          />
+                        </div>
+                        <p className={`text-sm mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          Enter your M-Pesa registered phone number (format: 254XXXXXXXXX)
+                        </p>
+                      </div>
+                      
+                      <div className={`${isDark ? 'bg-green-900/20' : 'bg-green-50'} border border-green-200 rounded-lg p-4`}>
+                        <h4 className={`font-medium mb-2 ${isDark ? 'text-green-300' : 'text-green-800'}`}>
+                          How M-Pesa Payment Works:
+                        </h4>
+                        <ol className={`text-sm space-y-1 ${isDark ? 'text-green-300' : 'text-green-800'}`}>
+                          <li>1. Click "Pay with M-Pesa" below</li>
+                          <li>2. You'll receive an STK push notification on your phone</li>
+                          <li>3. Enter your M-Pesa PIN to complete the payment</li>
+                          <li>4. You'll receive a confirmation SMS from M-Pesa</li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={processing}
+                    className="w-full py-4 bg-gradient-to-r from-green-500 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {processing ? (
+                      <div className="flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        Sending STK Push...
+                      </div>
+                    ) : (
+                      `Pay KSh ${(bookingDetails.total * 110).toFixed(0)} with M-Pesa`
+                    )}
+                  </button>
+                </form>
               )}
             </div>
           </div>

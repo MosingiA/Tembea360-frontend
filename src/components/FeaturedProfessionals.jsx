@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Star, MapPin, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 const FeaturedProfessionals = () => {
   const { isDark } = useTheme();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [allProfessionals, setAllProfessionals] = useState([]);
@@ -240,7 +241,21 @@ const FeaturedProfessionals = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      window.location.href = '/booking';
+                      navigate('/booking', {
+                        state: {
+                          selectedGuide: professional,
+                          selectedDestination: {
+                            id: `guide-${professional.id}`,
+                            name: `${professional.specialty} with ${professional.name}`,
+                            location: professional.location,
+                            rating: professional.rating,
+                            price: parseInt(professional.price.replace(/[^0-9]/g, '')),
+                            image: professional.image,
+                            description: `Professional ${professional.specialty.toLowerCase()} services in ${professional.location}`,
+                            duration: "Custom duration"
+                          }
+                        }
+                      });
                     }}
                     className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
                   >
