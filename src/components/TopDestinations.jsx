@@ -292,7 +292,7 @@ const TopDestinations = () => {
               Top International Destinations
             </h2>
             <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-              Explore amazing destinations across Africa
+              Explore 6 rotating destinations from our collection of 30 global sites
             </p>
           </div>
 
