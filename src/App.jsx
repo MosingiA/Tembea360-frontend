@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import Navbar from './components/Navbar';
@@ -11,6 +12,7 @@ import Contact from './components/Contact';
 import Profile from './components/Profile';
 import About from  './components/About';
 import ProfessionalSetup from './components/ProfessionalSetup';
+import GuideSubscriptionPlans from './components/GuideSubscriptionPlans';
 import Booking from './components/Booking';
 import Explore from './components/Explore';
 import Footer from './components/Footer';
@@ -19,12 +21,14 @@ import Tourdetails from './components/Tourdetails';
 import Tours from './components/Tours';
 import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
+import './App.css';
 
 function AppContent() {
   const { isDark } = useTheme();
+  const { user } = useAuth();
   
   return (
-    <div className={`App min-h-screen transition-colors duration-300 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+    <div className={`App min-h-screen transition-colors duration-300 ${isDark ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900' : 'tour-theme'} fun-dots`}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -40,6 +44,11 @@ function AppContent() {
         <Route path="/professional-setup" element={
           <ProtectedRoute>
             <ProfessionalSetup />
+          </ProtectedRoute>
+        } />
+        <Route path="/subscription-plans" element={
+          <ProtectedRoute>
+            {user?.userType === 'professional' ? <GuideSubscriptionPlans /> : <Navigate to="/" replace />}
           </ProtectedRoute>
         } />
         <Route path="/booking" element={

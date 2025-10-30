@@ -52,6 +52,7 @@ const Signup = () => {
         userType: formData.userType,
         profilePicture: formData.profilePicture ? URL.createObjectURL(formData.profilePicture) : null
       };
+      console.log('User created with type:', formData.userType);
       const token = 'mock-jwt-token';
       login(userData, token);
       

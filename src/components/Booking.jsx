@@ -100,29 +100,16 @@ const Booking = () => {
     if (step < 3) {
       setStep(step + 1);
     } else {
-      // Generate booking reference
-      const reference = `TM360-${Date.now().toString().slice(-6)}`;
-      setBookingReference(reference);
-      
-      // Process booking
+      // Store booking data for payment
       const bookingDetails = {
         ...bookingData,
-        reference,
         tour: selectedTour,
         pricing: calculateTotal(),
         timestamp: new Date().toISOString()
       };
       
-      console.log('Booking submitted:', bookingDetails);
-      
-      // Send confirmation email
-      const emailDetails = sendBookingConfirmationEmail(bookingDetails);
-      
-      // Show confirmation
-      setBookingConfirmed(true);
-      
-      // Demo alert showing email was sent
-      alert(`Booking confirmed! Confirmation email sent to ${bookingData.contactInfo.email}\n\nEmail Preview:\nSubject: ${emailDetails.subject}\nReference: ${reference}`);
+      localStorage.setItem('pendingBooking', JSON.stringify(bookingDetails));
+      window.location.href = '/payment';
     }
   };
 
@@ -339,7 +326,7 @@ const Booking = () => {
 
   if (bookingConfirmed) {
     return (
-      <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'} flex items-center justify-center`}>
+      <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'tour-bg'} flex items-center justify-center`}>
         <div className={`max-w-md w-full mx-4 ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg p-8 text-center`}>
           <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="text-white" size={32} />
@@ -384,7 +371,7 @@ const Booking = () => {
   }
 
   return (
-    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'tour-bg'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Tour Details Sidebar */}
@@ -489,7 +476,7 @@ const Booking = () => {
                     type="submit"
                     className="ml-auto px-8 py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
                   >
-                    {step === 3 ? 'Confirm Booking' : 'Continue'}
+                    {step === 3 ? 'Proceed to Payment' : 'Continue'}
                   </button>
                 </div>
               </form>

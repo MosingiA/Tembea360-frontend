@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { Users, Award, Globe, Heart } from 'lucide-react';
-import SubscriptionPlans from './SubscriptionPlans';
 
 
 const About = () => {
@@ -193,8 +192,7 @@ style={{
         </div>
       </section>
 
-      {/* Subscription Plans Section */}
-      <SubscriptionPlans />
+
     </div>
   );
 };

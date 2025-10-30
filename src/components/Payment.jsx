@@ -30,7 +30,17 @@ const Payment = () => {
     }
   }, []);
 
-  // Dynamic booking data based on selected plan or default tour booking
+  const [pendingBooking, setPendingBooking] = useState(null);
+
+  useEffect(() => {
+    // Get pending booking from localStorage
+    const bookingData = localStorage.getItem('pendingBooking');
+    if (bookingData) {
+      setPendingBooking(JSON.parse(bookingData));
+    }
+  }, []);
+
+  // Dynamic booking data based on selected plan or pending booking
   const bookingDetails = selectedPlan ? {
     tourName: `${selectedPlan.name} Subscription Plan`,
     date: "Starts immediately",
@@ -39,6 +49,14 @@ const Payment = () => {
     subtotal: parseFloat(selectedPlan.price.replace('$', '')),
     tax: parseFloat(selectedPlan.price.replace('$', '')) * 0.1,
     total: parseFloat(selectedPlan.price.replace('$', '')) * 1.1
+  } : pendingBooking ? {
+    tourName: pendingBooking.tour.name,
+    date: pendingBooking.date,
+    guests: pendingBooking.guests,
+    duration: pendingBooking.tour.duration,
+    subtotal: pendingBooking.pricing.subtotal,
+    tax: pendingBooking.pricing.tax,
+    total: pendingBooking.pricing.total
   } : {
     tourName: "Maasai Mara Safari Adventure",
     date: "March 15, 2024",
@@ -100,12 +118,46 @@ const Payment = () => {
     handleInputChange('expiryDate', formatted);
   };
 
+  const sendBookingConfirmationEmail = (bookingDetails) => {
+    const emailContent = {
+      to: bookingDetails.contactInfo.email,
+      subject: `Booking Confirmation - ${bookingDetails.tour.name}`,
+      body: `
+        Dear ${bookingDetails.contactInfo.firstName} ${bookingDetails.contactInfo.lastName},
+        
+        Thank you for booking with Tembea360! Your tour booking has been confirmed.
+        
+        BOOKING DETAILS:
+        - Tour: ${bookingDetails.tour.name}
+        - Date: ${bookingDetails.date}
+        - Guests: ${bookingDetails.guests}
+        - Total: $${bookingDetails.pricing.total.toFixed(2)}
+        - Reference: TM360-${Date.now().toString().slice(-6)}
+        
+        We will send you detailed itinerary and preparation information 48 hours before your tour.
+        
+        For any questions, please contact us at support@tembea360.com
+        
+        Best regards,
+        The Tembea360 Team
+      `
+    };
+    
+    console.log('Booking confirmation email sent:', emailContent);
+    return emailContent;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
     
     // Simulate payment processing
     setTimeout(() => {
+      // Send confirmation email for tour bookings
+      if (pendingBooking) {
+        sendBookingConfirmationEmail(pendingBooking);
+      }
+      
       setProcessing(false);
       setPaymentComplete(true);
     }, 3000);
@@ -113,7 +165,7 @@ const Payment = () => {
 
   if (paymentComplete) {
     return (
-      <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'} flex items-center justify-center`}>
+      <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'adventure-bg'} flex items-center justify-center`}>
         <div className={`max-w-md w-full mx-4 ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg p-8 text-center`}>
           <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="text-white" size={32} />
@@ -124,7 +176,11 @@ const Payment = () => {
           </h2>
           
           <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
-            Your booking has been confirmed. You will receive a confirmation email shortly.
+            {selectedPlan 
+              ? 'Your subscription has been activated! You can now start creating tour listings and managing your guide profile.' 
+              : pendingBooking
+              ? `Your tour booking has been confirmed! A confirmation email has been sent to ${pendingBooking.contactInfo.email} with all the details.`
+              : 'Your booking has been confirmed. You will receive a confirmation email shortly.'}
           </p>
           
           <div className={`${isDark ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg p-4 mb-6`}>
@@ -135,10 +191,27 @@ const Payment = () => {
           </div>
           
           <button
-            onClick={() => window.location.href = '/'}
+            onClick={() => {
+              // Check if this was a guide subscription payment
+              const selectedPlan = localStorage.getItem('selectedPlan');
+              const pendingBooking = localStorage.getItem('pendingBooking');
+              
+              if (selectedPlan) {
+                // Clear the stored plan and redirect to profile
+                localStorage.removeItem('selectedPlan');
+                localStorage.removeItem('professionalProfile');
+                window.location.href = '/profile';
+              } else if (pendingBooking) {
+                // Clear the pending booking and redirect to home
+                localStorage.removeItem('pendingBooking');
+                window.location.href = '/';
+              } else {
+                window.location.href = '/';
+              }
+            }}
             className="w-full py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
           >
-            Return to Home
+            {selectedPlan ? 'Go to Profile' : 'Return to Home'}
           </button>
         </div>
       </div>
@@ -146,7 +219,7 @@ const Payment = () => {
   }
 
   return (
-    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900' : 'adventure-bg'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Order Summary */}

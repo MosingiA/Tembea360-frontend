@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { User, MapPin, Camera, Award, DollarSign, Clock, Upload, Plus, X, Building } from 'lucide-react';
 
 const ProfessionalSetup = () => {
   const { isDark } = useTheme();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [profileData, setProfileData] = useState({
     personalInfo: {
@@ -138,7 +140,9 @@ const ProfessionalSetup = () => {
       setStep(step + 1);
     } else {
       console.log('Professional profile submitted:', profileData);
-      alert('Professional profile created successfully!');
+      // Store profile data and redirect to subscription plans
+      localStorage.setItem('professionalProfile', JSON.stringify(profileData));
+      navigate('/subscription-plans');
     }
   };
 
