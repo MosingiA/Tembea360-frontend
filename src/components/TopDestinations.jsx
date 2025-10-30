@@ -105,10 +105,14 @@ const TopDestinations = () => {
           getInternationalDestinations()
         ]);
         
+        console.log('Kenya sites loaded:', kenyaSites.length);
+        console.log('International sites loaded:', internationalSites.length);
+        
         setKenyaDestinations(kenyaSites.slice(0, 8));
         setInternationalDestinations(internationalSites);
         setLoading(false);
       } catch (err) {
+        console.error('API Error:', err);
         setError('Failed to fetch destinations');
         setKenyaDestinations(kenyaDestinationsData);
         setLoading(false);
