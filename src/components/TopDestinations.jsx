@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Star, Loader } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import { getKenyaTouringSites, getInternationalDestinations } from '../services/tourismAPI';
+// import { getKenyaTouringSites, getInternationalDestinations } from '../services/tourismAPI';
 
 const TopDestinations = () => {
   const { isDark } = useTheme();
@@ -97,29 +97,16 @@ const TopDestinations = () => {
   ];
 
   useEffect(() => {
-    const fetchDestinations = async () => {
-      try {
-        setLoading(true);
-        const [kenyaSites, internationalSites] = await Promise.all([
-          getKenyaTouringSites(),
-          getInternationalDestinations()
-        ]);
-        
-        console.log('Kenya sites loaded:', kenyaSites.length);
-        console.log('International sites loaded:', internationalSites.length);
-        
-        setKenyaDestinations(kenyaSites.slice(0, 8));
-        setInternationalDestinations(internationalSites);
-        setLoading(false);
-      } catch (err) {
-        console.error('API Error:', err);
-        setError('Failed to fetch destinations');
-        setKenyaDestinations(kenyaDestinationsData);
-        setLoading(false);
-      }
-    };
-
-    fetchDestinations();
+    setKenyaDestinations(kenyaDestinationsData);
+    setInternationalDestinations([
+      { id: 1, name: "Paris, France", location: "France", rating: 4.9, price: 1200, image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52" },
+      { id: 2, name: "Tokyo, Japan", location: "Japan", rating: 4.8, price: 1500, image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf" },
+      { id: 3, name: "New York, USA", location: "USA", rating: 4.7, price: 1300, image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9" },
+      { id: 4, name: "London, UK", location: "UK", rating: 4.8, price: 1100, image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad" },
+      { id: 5, name: "Rome, Italy", location: "Italy", rating: 4.7, price: 950, image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5" },
+      { id: 6, name: "Barcelona, Spain", location: "Spain", rating: 4.6, price: 850, image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4" }
+    ]);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -134,7 +121,8 @@ const TopDestinations = () => {
   }, [internationalDestinations]);
 
   const getCurrentInternationalDestinations = () => {
-    return internationalDestinations.slice(currentInternationalIndex, currentInternationalIndex + 6);
+    if (internationalDestinations.length === 0) return [];
+    return internationalDestinations.slice(0, 6);
   };
 
   const DestinationCard = ({ destination }) => (
