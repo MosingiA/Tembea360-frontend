@@ -28,7 +28,7 @@ function AppContent() {
   const { user } = useAuth();
   
   return (
-    <div className={`App min-h-screen transition-colors duration-300 ${isDark ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900' : 'tour-theme'} fun-dots`}>
+    <div className={`App min-h-screen transition-colors duration-300 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
