@@ -3,129 +3,102 @@ import { Link } from 'react-router-dom';
 import { Search, MapPin, Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
-
 const HeroSection = () => {
   const { isDark } = useTheme();
 
   return (
-    <section className={`pt-16 min-h-screen flex items-center ${isDark ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 to-indigo-100'}`}>
+    <section className={`pt-16 min-h-screen flex items-center ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Text Section */}
-          <div className="space-y-8">
-            <h1
-              className={`text-5xl lg:text-6xl font-bold leading-tight ${
-                isDark ? 'text-white' : 'text-gray-900'
-              }`}
-            >
-              Discover Amazing
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-700">
-                {' '}Adventures
-              </span>
-            </h1>
-
-            <p
-              className={`text-xl ${
-                isDark ? 'text-gray-300' : 'text-white-500'
-              } max-w-lg`}
-            >
-              Explore breathtaking destinations, create unforgettable memories,
-              and embark on the journey of a lifetime with Tembea360.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              {/* Main CTA Button */}
-              <Link
-                to="/signup"
-                className="px-8 py-4 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
-              >
-Start Exploring Today
-              </Link>
-
-              {/* Secondary Button — now matches the main style */}
-              <Link
-                to="/tours"
-                className="px-8 py-4 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
-              >
-                View Tours
-              </Link>
-            </div>
-          </div>
-
-          {/* Form Section */}
-          <div className="relative">
-            <div
-              className={`${
-                isDark ? 'bg-gray-800' : 'bg-white'
-              } rounded-2xl shadow-2xl p-8`}
-            >
-              <h3
-                className={`text-2xl font-bold mb-6 ${
+        <div className="grid lg:grid-cols-5 gap-8 items-start">
+          <div className="lg:col-span-3">
+            {/* Text Section */}
+            <div className="space-y-6">
+              <h1
+                className={`text-4xl lg:text-5xl font-normal leading-tight ${
                   isDark ? 'text-white' : 'text-gray-900'
                 }`}
               >
-                Find Your Perfect Trip
-              </h3>
+                Find your next adventure in
+                <span className="text-blue-600 font-medium">
+                  {' '}Kenya
+                </span>
+              </h1>
 
+              <p
+                className={`text-lg ${
+                  isDark ? 'text-gray-400' : 'text-gray-600'
+                } max-w-lg`}
+              >
+                Discover amazing destinations, book tours, and create unforgettable memories
+              </p>
+
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to="/tours"
+                  className={`px-6 py-3 ${isDark ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-700'} rounded-full text-sm font-medium hover:shadow-md transition-all duration-200`}
+                >
+                  Tours
+                </Link>
+                <Link
+                  to="/explore"
+                  className={`px-6 py-3 ${isDark ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-700'} rounded-full text-sm font-medium hover:shadow-md transition-all duration-200`}
+                >
+                  Destinations
+                </Link>
+                <Link
+                  to="/booking"
+                  className={`px-6 py-3 ${isDark ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-700'} rounded-full text-sm font-medium hover:shadow-md transition-all duration-200`}
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Search Section */}
+          <div className="lg:col-span-2">
+            <div
+              className={`${
+                isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+              } rounded-2xl border shadow-lg p-6`}
+            >
               <div className="space-y-4">
-                {/* Search Input */}
+                {/* Main Search Input */}
                 <div className="relative">
                   <Search
-                    className="absolute left-3 top-3 text-gray-400"
+                    className="absolute left-4 top-4 text-gray-400"
                     size={20}
                   />
                   <input
                     type="text"
-                    placeholder="Where do you want to go?"
-                    className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                    placeholder="Search destinations, tours..."
+                    className={`w-full pl-12 pr-4 py-4 text-lg border-0 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none ${
                       isDark
-                        ? 'bg-gray-700 border-gray-600 text-white'
-                        : 'bg-white border-gray-300'
+                        ? 'bg-gray-700 text-white placeholder-gray-400'
+                        : 'bg-gray-50 text-gray-900 placeholder-gray-500'
                     }`}
                   />
                 </div>
 
-                {/* Date and Duration */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="relative">
-                    <Calendar
-                      className="absolute left-3 top-3 text-gray-400"
-                      size={20}
-                    />
-                    <input
-                      type="date"
-                      className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                        isDark
-                          ? 'bg-gray-700 border-gray-600 text-white'
-                          : 'bg-white border-gray-300'
-                      }`}
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <MapPin
-                      className="absolute left-3 top-3 text-gray-400"
-                      size={20}
-                    />
-                    <select
-                      className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                        isDark
-                          ? 'bg-gray-700 border-gray-600 text-white'
-                          : 'bg-white border-gray-300'
-                      }`}
-                    >
-                      <option>Duration</option>
-                      <option>1–3 days</option>
-                      <option>4–7 days</option>
-                      <option>1–2 weeks</option>
-                      <option>2+ weeks</option>
-                    </select>
-                  </div>
+                {/* Quick Filters */}
+                <div className="flex flex-wrap gap-2">
+                  <button className={`px-4 py-2 text-sm rounded-full border ${
+                    isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+                  }`}>
+                    <Calendar size={16} className="inline mr-2" />
+                    Any dates
+                  </button>
+                  <button className={`px-4 py-2 text-sm rounded-full border ${
+                    isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+                  }`}>
+                    <MapPin size={16} className="inline mr-2" />
+                    All locations
+                  </button>
                 </div>
 
                 {/* Search Button */}
-                <button className="w-full py-3 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
-                  Search Adventures
+                <button className="w-full py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors">
+                  Search
                 </button>
               </div>
             </div>
