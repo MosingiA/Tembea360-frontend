@@ -19,6 +19,7 @@ import Footer from './components/Footer';
 import Payment from './components/Payment';
 import Tourdetails from './components/Tourdetails';
 import Tours from './components/Tours';
+import TravelSearch from './components/TravelSearch';
 import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
 import './App.css';
@@ -72,6 +73,7 @@ function AppContent() {
           </ProtectedRoute>
         } />
         <Route path="/about" element={<About />} />
+        <Route path="/travel-search" element={<TravelSearch />} />
         <Route path="/payment" element={
           <ProtectedRoute>
             <Payment />

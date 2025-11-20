@@ -41,6 +41,9 @@ const Navbar = () => {
             <Link to="/tours" className={`hover:text-green-500 transition-colors ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
               Tours
             </Link>
+            <Link to="/travel-search" className={`hover:text-green-500 transition-colors ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              Search
+            </Link>
             <Link to="/about" className={`hover:text-green-500 transition-colors ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
               About
             </Link>
@@ -158,6 +161,9 @@ const Navbar = () => {
               </Link>
               <Link to="/tours" className={`block px-3 py-2 hover:bg-gray-100 ${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700'}`}>
                 Tours
+              </Link>
+              <Link to="/travel-search" className={`block px-3 py-2 hover:bg-gray-100 ${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700'}`}>
+                Search
               </Link>
               <Link to="/about" className={`block px-3 py-2 hover:bg-gray-100 ${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700'}`}>
                 About

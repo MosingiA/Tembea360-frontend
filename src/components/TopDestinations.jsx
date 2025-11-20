@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Star, Loader } from 'lucide-react';
+import { MapPin, Star, Loader, Hotel, Package } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-// import { getKenyaTouringSites, getInternationalDestinations } from '../services/tourismAPI';
+import { getDestinationTravelInfo } from '../services/travelAPI';
 
 const TopDestinations = () => {
   const { isDark } = useTheme();
@@ -12,6 +12,7 @@ const TopDestinations = () => {
   const [currentKenyaIndex, setCurrentKenyaIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [travelData, setTravelData] = useState({});
 
   const kenyaDestinationsData = [
     { id: 1, name: "Maasai Mara National Reserve", location: "Narok County", rating: 4.9, price: 599, image: "https://images.unsplash.com/photo-1516426122078-c23e76319801", description: "World-famous for the Great Migration", category: "Wildlife" },
@@ -104,6 +105,21 @@ const TopDestinations = () => {
     setKenyaDestinations(allKenyaSites);
     setInternationalDestinations(allInternationalSites);
     setLoading(false);
+    
+    // Simple mock travel data
+    const mockData = {};
+    allKenyaSites.slice(0, 8).forEach(dest => {
+      mockData[dest.name] = {
+        accommodation: {
+          hotels: [{ id: 1, name: `${dest.name} Lodge`, price: 250 }]
+        },
+        packages: {
+          packages: [{ id: 1, name: `${dest.name} Package` }]
+        },
+        weather: { temperature: '25°C', condition: 'Sunny' }
+      };
+    });
+    setTravelData(mockData);
   }, []);
 
   useEffect(() => {
@@ -138,59 +154,97 @@ const TopDestinations = () => {
     return kenyaDestinations.slice(currentKenyaIndex, currentKenyaIndex + 8);
   };
 
-  const DestinationCard = ({ destination }) => (
-    <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}>
-      <div className="relative">
-        <img
-          src={destination.image}
-          alt={destination.name}
-          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-          <span className="text-sm font-semibold text-gray-900">${destination.price || 'From $299'}</span>
-        </div>
-        {destination.category && (
-          <div className="absolute top-4 left-4 bg-green-500/90 backdrop-blur-sm rounded-full px-3 py-1">
-            <span className="text-xs font-semibold text-white">{destination.category}</span>
+  const DestinationCard = ({ destination }) => {
+    const destTravelData = travelData[destination.name];
+    
+    return (
+      <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}>
+        <div className="relative">
+          <img
+            src={destination.image}
+            alt={destination.name}
+            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+          <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+            <span className="text-sm font-semibold text-gray-900">${destination.price || 'From $299'}</span>
           </div>
-        )}
-      </div>
-      
-      <div className="p-6">
-        <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-          {destination.name}
-        </h3>
+          {destination.category && (
+            <div className="absolute top-4 left-4 bg-green-500/90 backdrop-blur-sm rounded-full px-3 py-1">
+              <span className="text-xs font-semibold text-white">{destination.category}</span>
+            </div>
+          )}
+        </div>
         
-        {destination.description && (
-          <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-3 line-clamp-2`}>
-            {destination.description}
-          </p>
-        )}
-        
-        <div className="flex items-center justify-between mb-4">
-          <div className={`flex items-center ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-            <MapPin size={14} className="mr-1" />
-            <span className="text-xs">{destination.location}</span>
+        <div className="p-6">
+          <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            {destination.name}
+          </h3>
+          
+          {destination.description && (
+            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-3 line-clamp-2`}>
+              {destination.description}
+            </p>
+          )}
+          
+          {destTravelData && (
+            <div className="mb-4 space-y-2">
+              {destTravelData.accommodation?.hotels?.length > 0 && (
+                <div className={`flex items-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <Hotel size={12} className="mr-1" />
+                  <span>{destTravelData.accommodation.hotels.length} hotels from ${destTravelData.accommodation.hotels[0].price}</span>
+                </div>
+              )}
+              {destTravelData.packages?.packages?.length > 0 && (
+                <div className={`flex items-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <Package size={12} className="mr-1" />
+                  <span>{destTravelData.packages.packages.length} packages available</span>
+                </div>
+              )}
+              {destTravelData.weather && (
+                <div className={`flex items-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <span>🌤️ {destTravelData.weather.temperature} - {destTravelData.weather.condition}</span>
+                </div>
+              )}
+            </div>
+          )}
+          
+          <div className="flex items-center justify-between mb-4">
+            <div className={`flex items-center ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+              <MapPin size={14} className="mr-1" />
+              <span className="text-xs">{destination.location}</span>
+            </div>
+            
+            <div className="flex items-center">
+              <Star className="text-yellow-400 fill-current" size={14} />
+              <span className={`ml-1 text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                {destination.rating}
+              </span>
+            </div>
           </div>
           
-          <div className="flex items-center">
-            <Star className="text-yellow-400 fill-current" size={14} />
-            <span className={`ml-1 text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              {destination.rating}
-            </span>
+          <div className="space-y-2">
+            <Link
+              to="/booking"
+              state={{ selectedDestination: destination, travelData: destTravelData }}
+              className="w-full block text-center py-2.5 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 text-sm"
+            >
+              Book Now
+            </Link>
+            
+            {destTravelData && (
+              <Link
+                to="/tourdetails"
+                state={{ selectedDestination: destination, travelData: destTravelData }}
+                className={`w-full block text-center py-2 border-2 border-green-500 ${isDark ? 'text-green-400 hover:bg-green-400 hover:text-gray-900' : 'text-green-600 hover:bg-green-500 hover:text-white'} rounded-lg font-medium transition-all duration-300 text-sm`}
+              >
+                View Details
+              </Link>
+            )}
           </div>
         </div>
-        
-        <Link
-          to="/booking"
-          state={{ selectedDestination: destination }}
-          className="w-full block text-center py-2.5 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 text-sm"
-        >
-          Book Now
-        </Link>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <section className={`py-20 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
